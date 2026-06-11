@@ -1036,6 +1036,7 @@ function exitBattle() {
   cv.height  = EXPLORE_H;
   invincible = 120;
   pl.vx = 0;
+  ensureGameLoop();
   updateHUD();
 }
 
@@ -1169,6 +1170,14 @@ function showDeathScreen() {
     exitBattle();
     updateHUD();
   };
+  document.getElementById('deathSelectBtn').onclick = function() {
+    document.getElementById('deathScreen').hidden = true;
+    document.getElementById('battleUI').hidden = true;
+    cv.height = EXPLORE_H;
+    gameMode  = 'levelselect';
+    playerHP  = 100;
+    showLevelSelect();
+  };
 }
 
 /* =====================================================================
@@ -1190,6 +1199,10 @@ function showLevelWin() {
 
   if (typeof confetti === 'function') confetti({particleCount:100,spread:80,origin:{y:0.4}});
 
+  document.getElementById('lwSelectBtn').onclick = function() {
+    document.getElementById('levelWinScreen').hidden = true;
+    showLevelSelect();
+  };
   document.getElementById('nextLevelBtn').textContent = '前往下一层 ▶';
   document.getElementById('nextLevelBtn').onclick = function() {
     el.hidden = true;
@@ -1357,6 +1370,167 @@ function initSettings() {
 }
 
 /* =====================================================================
+   TITLE SCREEN
+   ===================================================================== */
+var titleAnimRAF = null;
+
+function showTitleScreen() {
+  gameMode = 'title';
+  document.getElementById('titleScreen').style.display = 'flex';
+  document.getElementById('levelSelectScreen').hidden = true;
+  document.getElementById('hud').style.visibility = 'hidden';
+  document.getElementById('touchCtrl').style.display = 'none';
+  drawTitleCanvas();
+
+  document.getElementById('titleStartBtn').onclick = function() {
+    hideTitleScreen();
+    var saved = loadGame();
+    initLevel(currentFloor, saved || {});
+    updateHUD();
+  };
+
+  document.getElementById('titleSelectBtn').onclick = function() {
+    document.getElementById('titleScreen').style.display = 'none';
+    showLevelSelect();
+  };
+}
+
+function hideTitleScreen() {
+  document.getElementById('titleScreen').style.display = 'none';
+  document.getElementById('hud').style.visibility = 'visible';
+  if (titleAnimRAF) { cancelAnimationFrame(titleAnimRAF); titleAnimRAF = null; }
+  ensureGameLoop();
+}
+
+function ensureGameLoop() {
+  if (!raf) raf = requestAnimationFrame(gameLoop);
+}
+
+function drawTitleCanvas() {
+  // Draw atmospheric dungeon background on canvas while title is up
+  cv.height = EXPLORE_H;
+  var p = PAL[1];
+
+  function animFrame() {
+    if (gameMode !== 'title') return;
+    frameCount++;
+    ctx.fillStyle = p.wall;
+    ctx.fillRect(0, 0, W, EXPLORE_H);
+
+    // Brick pattern
+    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+    ctx.lineWidth = 1;
+    for (var by = 0; by < EXPLORE_H; by += 24) {
+      var rowShift = (Math.floor(by/24)%2) * 24;
+      for (var bx = rowShift - 48; bx < W + 48; bx += 48) {
+        ctx.strokeRect(bx, by, 47, 23);
+      }
+    }
+
+    // Atmospheric torches
+    for (var ti = 0; ti < 5; ti++) {
+      drawTorch(80 + ti * 160, 100, p);
+      drawTorch(160 + ti * 160, 260, p);
+    }
+
+    // Floating embers
+    tickEmbers();
+    drawEmbers(0);
+
+    // Scanlines
+    ctx.fillStyle = 'rgba(0,0,0,0.10)';
+    for (var y = 0; y < EXPLORE_H; y += 2) ctx.fillRect(0, y, W, 1);
+
+    titleAnimRAF = requestAnimationFrame(animFrame);
+  }
+  titleAnimRAF = requestAnimationFrame(animFrame);
+}
+
+/* =====================================================================
+   LEVEL SELECT SCREEN
+   ===================================================================== */
+var FLOOR_TOPICS = [
+  '邓稼先 · 闻一多 · 鲁迅',
+  '黄河颂 · 最后一课 · 木兰诗',
+  '老王 · 驿路梨花 · 台阶',
+  '陋室铭 · 爱莲说 · 河中石兽',
+  '紫藤萝 · 小桃树 · 普希金',
+  '伟大的悲剧 · 太空一日 · 刘慈欣',
+];
+
+var FLOOR_ACCENTS = ['#4060ff','#ff5020','#40c040','#c060ff','#00c8d8','#ff8000'];
+
+function showLevelSelect() {
+  gameMode = 'levelselect';
+  document.getElementById('levelSelectScreen').hidden = false;
+  document.getElementById('hud').style.visibility = 'hidden';
+  document.getElementById('touchCtrl').style.display = 'none';
+
+  document.getElementById('lsXP').textContent = 'XP: ' + playerXP;
+
+  var grid = document.getElementById('lsGrid');
+  grid.innerHTML = '';
+
+  // Read save to know progress
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(SAVE_KEY)); } catch(e) {}
+
+  DB.forEach(function(fl, i) {
+    var card = document.createElement('div');
+    card.className = 'ls-card';
+    card.style.setProperty('--card-accent', FLOOR_ACCENTS[i]);
+
+    // Check completion: boss defeated
+    var bossCleared = saved && i < currentFloor;
+    if (i === currentFloor && saved && saved.defeatedBoss) bossCleared = true;
+    if (bossCleared) card.classList.add('completed');
+
+    // Enemy pips (5 enemies + 1 boss = 6 pips)
+    var defeatedCount = 0;
+    if (saved && saved.defeatedEnemies && i === currentFloor) {
+      defeatedCount = saved.defeatedEnemies.filter(Boolean).length;
+    } else if (i < (saved ? saved.floor || 0 : 0)) {
+      defeatedCount = 5;
+    }
+
+    var pipsHTML = '';
+    for (var p = 0; p < 5; p++) {
+      pipsHTML += '<div class="ls-pip' + (p < defeatedCount ? ' done' : '') + '"></div>';
+    }
+    pipsHTML += '<div class="ls-pip' + (bossCleared ? ' boss' : '') + '" title="领主"></div>';
+
+    card.innerHTML =
+      '<div class="ls-num">第 ' + (i+1) + ' 层</div>' +
+      '<div class="ls-name">' + fl.name + '</div>' +
+      '<div class="ls-topics">' + FLOOR_TOPICS[i] + '</div>' +
+      '<div class="ls-progress">' + pipsHTML + '</div>' +
+      '<button class="ls-playbtn">' + (bossCleared ? '✓ 再次挑战' : '▶ 进入关卡') + '</button>';
+
+    card.addEventListener('click', function(idx) {
+      return function() {
+        document.getElementById('levelSelectScreen').hidden = true;
+        document.getElementById('hud').style.visibility = 'visible';
+        playerHP   = 100;
+        currentFloor = idx;
+        // Keep XP but reset floor-specific progress
+        var existingSave = null;
+        try { existingSave = JSON.parse(localStorage.getItem(SAVE_KEY)); } catch(e) {}
+        initLevel(idx, idx === (existingSave ? existingSave.floor : 0) ? existingSave : {});
+        gameMode = 'explore';
+        updateHUD();
+      };
+    }(i));
+
+    grid.appendChild(card);
+  });
+
+  document.getElementById('lsBackBtn').onclick = function() {
+    document.getElementById('levelSelectScreen').hidden = true;
+    showTitleScreen();
+  };
+}
+
+/* =====================================================================
    KEYBOARD
    ===================================================================== */
 document.addEventListener('keydown', function(e) {
@@ -1379,12 +1553,10 @@ document.addEventListener('keyup', function(e) {
    ===================================================================== */
 function boot() {
   levels = makeLevels();
-  var saved = loadGame();
-  initLevel(currentFloor, saved || {});
+  loadGame();
   initTouch();
   initSettings();
-  updateHUD();
-  requestAnimationFrame(gameLoop);
+  showTitleScreen();
 }
 
 window.addEventListener('load', boot);

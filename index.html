@@ -57,6 +57,30 @@
 
 </div>
 
+<!-- Title screen -->
+<div id="titleScreen">
+  <div id="titleContent">
+    <div id="titleSub">语文七下 · 备考秘境</div>
+    <h1 id="titleMain">罪孽<br>地下城</h1>
+    <div id="titleTagline">为 Roy 精心打造</div>
+    <div id="titleBtns">
+      <button class="title-btn" id="titleStartBtn">⚔ 开始冒险</button>
+      <button class="title-btn title-btn-sec" id="titleSelectBtn">🗺 选择关卡</button>
+    </div>
+    <div id="titleHint">方向键移动 &nbsp;·&nbsp; 空格跳跃 &nbsp;·&nbsp; 碰到敌人开战</div>
+  </div>
+</div>
+
+<!-- Level select screen -->
+<div id="levelSelectScreen" hidden>
+  <div id="lsHeader">
+    <button id="lsBackBtn" class="ls-back">← 返回</button>
+    <h2 id="lsTitle">选择关卡</h2>
+    <div id="lsXP"></div>
+  </div>
+  <div id="lsGrid"></div>
+</div>
+
 <!-- Flash overlay -->
 <div id="flashOverlay" aria-hidden="true"></div>
 
@@ -65,6 +89,7 @@
   <h2>冒险者<br>倒下了</h2>
   <p id="deathMsg"></p>
   <button id="continueBtn">重振旗鼓</button>
+  <button id="deathSelectBtn" class="title-btn title-btn-sec" style="margin-top:4px">🗺 选择关卡</button>
 </div>
 
 <!-- Level win screen -->
@@ -72,6 +97,7 @@
   <h2 id="lwTitle"></h2>
   <p id="lwMsg"></p>
   <button id="nextLevelBtn">前往下一层 ▶</button>
+  <button id="lwSelectBtn" class="title-btn title-btn-sec" style="margin-top:6px;font-size:.40rem">🗺 选择关卡</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1/dist/confetti.browser.min.js"></script>
