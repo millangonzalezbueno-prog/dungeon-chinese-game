@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <div id="root">
 
   <!-- HUD -->
@@ -23,58 +22,56 @@
       <div class="bar-bg"><div id="xpFill"></div></div>
     </div>
     <div class="hud-stat">层 <span id="flNum">1</span>/6</div>
-    <div class="hud-streak">连击 <span id="streakNum">0</span>×</div>
+    <div class="hud-flname" id="floorName">杰出人物</div>
+    <div class="hud-streak" id="streakWrap">连击 <span id="streakNum">0</span>×</div>
   </div>
 
-  <!-- Main layout -->
-  <div id="main">
+  <!-- Main game canvas -->
+  <canvas id="cv" aria-hidden="true"></canvas>
 
-    <!-- Floor map -->
-    <nav id="sideMap" aria-label="楼层地图">
-      <h3>⚔ 地下城<br>地图 ⚔</h3>
-      <div id="fnList"></div>
-    </nav>
-
-    <!-- Game area -->
-    <div id="gameArea">
-      <div id="bossMsg" aria-live="polite">⚠ BOSS 已解锁！进入领主之间！</div>
-      <div id="roomGrid" role="list"></div>
-
-      <div id="panel">
-        <div id="notify" aria-live="polite"></div>
-        <div id="dynArea">
-          <!-- Idle screen injected by JS -->
-        </div>
-      </div>
-
-      <!-- Settings -->
-      <div id="settingsArea">
-        <button id="settingsToggle" aria-label="设置">⚙ 设置</button>
-        <div id="settingsPanel" hidden>
-          <button id="resetBtn">重置进度</button>
-          <div id="resetConfirm" hidden>
-            <span>确定重置?</span>
-            <button id="resetYes">确定</button>
-            <button id="resetNo">取消</button>
-          </div>
+  <!-- Battle UI (shown during Q&A battles) -->
+  <div id="battleUI" hidden>
+    <div id="notify" aria-live="polite"></div>
+    <div id="dynArea"></div>
+    <div id="settingsArea">
+      <button id="settingsToggle" aria-label="设置">⚙ 设置</button>
+      <div id="settingsPanel" hidden>
+        <button id="resetBtn">重置进度</button>
+        <div id="resetConfirm" hidden>
+          <span>确定重置?</span>
+          <button id="resetYes">确定</button>
+          <button id="resetNo">取消</button>
         </div>
       </div>
     </div>
-
   </div>
+
+  <!-- Touch controls -->
+  <div id="touchCtrl" aria-hidden="true">
+    <div id="dpad">
+      <button class="touch-btn" id="btnLeft">◀</button>
+      <button class="touch-btn" id="btnRight">▶</button>
+    </div>
+    <button class="touch-btn touch-jump" id="btnJump">跳</button>
+  </div>
+
 </div>
 
-<!-- Shared canvas (moved into dynArea during battles) -->
-<canvas id="cv" aria-hidden="true"></canvas>
-
-<!-- Screen flash overlay -->
+<!-- Flash overlay -->
 <div id="flashOverlay" aria-hidden="true"></div>
 
 <!-- Death screen -->
 <div id="deathScreen" role="dialog" aria-modal="true" aria-label="游戏结束" hidden>
   <h2>冒险者<br>倒下了</h2>
   <p id="deathMsg"></p>
-  <button id="continueBtn">从上一层继续</button>
+  <button id="continueBtn">重振旗鼓</button>
+</div>
+
+<!-- Level win screen -->
+<div id="levelWinScreen" hidden>
+  <h2 id="lwTitle"></h2>
+  <p id="lwMsg"></p>
+  <button id="nextLevelBtn">前往下一层 ▶</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1/dist/confetti.browser.min.js"></script>

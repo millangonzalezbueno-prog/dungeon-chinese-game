@@ -1,1441 +1,1372 @@
+// 罪孽地下城 · 语文七下 — Platformer Edition v5
 'use strict';
 
-// ═══════════════════════════════════════════════════════════
-// 1. DATABASE  (七年级下册 · 全六单元)
-// ═══════════════════════════════════════════════════════════
-
-const DB = {
-  1: {
-    name: '杰出人物',
-    bossName: '邓稼先之灵',
-    bossTitle: '献身报国 · 国之重器',
-    qs: [
-      { q: '邓稼先和奥本海默的突出不同点是什么？', opts: ['都是锋芒毕露', '邓稼先忠厚平实，奥本海默锋芒毕露', '都醉心权力', '两人从不交往'], ok: 1, ex: '对比凸显邓稼先朴实谦逊的气质。' },
-      { q: '"锲而不舍"的正确解释是？', opts: ['放弃努力', '坚持不懈，持之以恒', '一刀而断', '随意而为'], ok: 1, ex: '锲而不舍比喻持之以恒，永不放弃。' },
-      { q: '《孙权劝学》中孙权劝吕蒙学习的理由是？', opts: ['当涂掌事，不可不学', '考取功名', '为家族争光', '练习武术'], ok: 0, ex: '孙权认为吕蒙身居要职，必须学习。' },
-      { q: '闻一多先生研究学问的特点是？', opts: ['说了再做', '做了再说', '说了也不做', '只说不做'], ok: 1, ex: '闻一多做了再说，专注实干，体现学者风骨。' },
-      { q: '《邓稼先》引用《吊古战场文》的主要作用？', opts: ['表现英雄气概', '渲染荒凉悲壮，暗示科研艰苦', '描写自然风景', '介绍历史背景'], ok: 1, ex: '烘托罗布泊艰苦环境，致敬无私奉献精神。' },
-      { q: '形容邓稼先最恰当的词语是？', opts: ['锋芒毕露，傲慢自大', '纯正无私，忠厚平实', '急功近利，追名逐利', '虚伪狡诈'], ok: 1, ex: '课文着重强调邓稼先真诚谦逊的品格。' },
-      { q: '"士别三日，即更刮目相待"的含义是？', opts: ['与人分别三天应当想念', '人进步了要以新眼光看待', '读书三日即可成才', '三天之内无需问候'], ok: 1, ex: '吕蒙进步神速，应以新眼光看待进步中的人。' },
-      { q: '《孙权劝学》中，鲁肃为何对吕蒙"刮目相待"？', opts: ['吕蒙武艺高超', '吕蒙饱读诗书，才学大进', '吕蒙官职升迁', '吕蒙品德高尚'], ok: 1, ex: '吕蒙听从孙权劝说，勤学苦读，令鲁肃叹服。' },
-      { q: '"鞠躬尽瘁，死而后已"描述的是哪种精神？', opts: ['贪图享乐', '无私奉献，忠心报国', '追求功名', '明哲保身'], ok: 1, ex: '形容竭尽心力为国效命，直至死亡，邓稼先正是这种精神的体现。' },
-    ],
-    storys: [
-      { text: '君视名利如粪土，许身国威壮河山。', py: 'jūn shì míng lì rú fèn tǔ', ex: '邓稼先为国家核事业无私奉献，不求名利，功绩永载史册。' },
-      { text: '人家说了再做，我是做了再说。', py: 'rén jiā shuō le zài zuò，wǒ shì zuò le zài shuō', ex: '闻一多先生注重实干，体现知识分子的风骨与担当。' },
-      { text: '士别三日，即更刮目相待。', py: 'shì bié sān rì，jí gèng guā mù xiāng dài', ex: '吕蒙勤奋学习，大有长进，劝勉我们不可停止成长。' },
-    ],
-    boss: { q: '下列关于本单元人物精神的说法，正确的是？', opts: ['邓稼先谦逊实干，吕蒙勇于学习，两者均体现积极精神', '他们都追求名利', '邓稼先看重地位，吕蒙拒绝学习', '二人均崇尚武力'], ok: 0, ex: '两人都展现积极进取、无私奉献与成长的精神。' },
+/* =====================================================================
+   QUESTION DATABASE  (6 floors × 9 questions + boss)
+   ===================================================================== */
+const DB = [
+  {
+    floor:1, name:'杰出人物', bossName:'邓稼先之魂', bossTitle:'两弹元勋',
+    color:'#1a3a6e',
+    questions:[
+      {q:'邓稼先是哪个国家的核武器奠基人?', opts:['中国','美国','苏联','英国'], ans:0,
+       note:'邓稼先是中国核武器研制的开拓者和奠基人'},
+      {q:'《邓稼先》的作者是谁?', opts:['莫言','杨振宁','余光中','冰心'], ans:1,
+       note:'杨振宁与邓稼先是老朋友，亲笔撰文纪念'},
+      {q:'文中"鞠躬尽瘁"形容邓稼先的什么精神?', opts:['忠诚奉献','聪明才智','谦虚谨慎','勇敢无畏'], ans:0,
+       note:'鞠躬尽瘁，死而后已——形容为国奉献、不辞劳苦'},
+      {q:'闻一多在《最后一次讲演》中面对的威胁是什么?', opts:['战争','特务暗杀','洪水','贫困'], ans:1,
+       note:'闻一多当天被国民党特务暗杀，此文是他最后的演讲'},
+      {q:'"热情澎湃、慷慨激昂"是文中描写谁演讲风格的?', opts:['邓稼先','毛泽东','闻一多','鲁迅'], ans:2,
+       note:'闻一多的演讲充满激情，义愤填膺，感人至深'},
+      {q:'《说和做》记述的是哪位学者?', opts:['钱学森','邓稼先','闻一多','华罗庚'], ans:2,
+       note:'臧克家写《说和做》，记叙闻一多先生"做"的精神'},
+      {q:'《回忆鲁迅先生》的作者是哪位女作家?', opts:['冰心','萧红','张爱玲','林徽因'], ans:1,
+       note:'萧红写了《回忆鲁迅先生》，描述鲁迅的日常生活点滴'},
+      {q:'"横眉冷对千夫指，俯首甘为孺子牛"出自谁的诗?', opts:['毛泽东','鲁迅','闻一多','郭沫若'], ans:1,
+       note:'这是鲁迅《自嘲》中的名句，体现了他的精神品格'},
+      {q:'邓稼先在哪个地方秘密研制原子弹?', opts:['北京','上海','西北荒漠','云南'], ans:2,
+       note:'邓稼先在人迹罕至的西北荒漠秘密工作了28年'},
+    ]
   },
-
-  2: {
-    name: '家国情怀',
-    bossName: '木兰将军',
-    bossTitle: '替父从军 · 家国忠魂',
-    qs: [
-      { q: '《黄河颂》"黄河！你是中华民族的摇篮"使用了什么修辞？', opts: ['拟人', '比喻与象征', '夸张', '排比'], ok: 1, ex: '将黄河比作摇篮，象征其孕育中华文明的伟大作用。' },
-      { q: '"朔气传金柝，寒光照铁衣"描写了什么？', opts: ['战争征途的艰辛', '田园风光', '宴饮欢聚', '送别情谊'], ok: 0, ex: '北风传来打更声，寒光映照铁甲，表现木兰从军征战之艰苦。' },
-      { q: '《老山界》体现了红军什么精神？', opts: ['享乐主义', '畏难情绪', '顽强意志与革命乐观主义', '逃跑主义'], ok: 2, ex: '翻越老山界体现了红军坚韧不拔的意志与乐观昂扬的革命精神。' },
-      { q: '"策勋十二转"中"策勋"的意思是？', opts: ['记录功勋', '免除官职', '罢免官员', '升迁送礼'], ok: 0, ex: '"策勋"指记录功勋，此处极言木兰战功卓著。' },
-      { q: '《黄河颂》表达情感的核心是？', opts: ['个人哀愁', '家国情怀与抗战决心', '爱情思念', '游子思乡'], ok: 1, ex: '诗歌核心是抒发保卫黄河、保卫中华民族的爱国主义精神。' },
-      { q: '"万里赴戎机，关山度若飞"写出了？', opts: ['行军速度神速，奔赴战场', '思念故乡之情', '对战争的厌倦', '享乐生活'], ok: 0, ex: '不远万里奔赴战场，翻山越岭如飞，突出行军迅疾与豪迈。' },
-      { q: '《木兰诗》中"但闻燕山胡骑鸣啾啾"中"但"的意思是？', opts: ['但是', '只是，只听到', '却', '不过'], ok: 1, ex: '"但"在此处是"只是，只听到"之意，突出边塞环境的紧张。' },
-      { q: '红军战士翻越老山界时，用什么态度面对艰难？', opts: ['垂头丧气', '乐观豁达，甘之如饴', '埋怨领导', '消极逃避'], ok: 1, ex: '红军以革命乐观主义精神，苦中作乐，彰显英雄本色。' },
-      { q: '《木兰诗》属于哪种文学体裁？', opts: ['骈文', '乐府民歌', '律诗', '词'], ok: 1, ex: '《木兰诗》是北朝的乐府民歌，与《孔雀东南飞》并称"乐府双璧"。' },
-    ],
-    storys: [
-      { text: '啊！黄河！你是伟大坚强！', py: 'ā！huáng hé！nǐ shì wěi dà jiān qiáng！', ex: '歌颂黄河象征中华民族不屈不挠的精神，激发爱国豪情。' },
-      { text: '我们顶着天啦！', py: 'wǒ men dǐng zhe tiān la！', ex: '翻越老山界时红军的豪迈与自信，体现革命英雄主义。' },
-      { text: '愿为市鞍马，从此替爷征。', py: 'yuàn wèi shì ān mǎ，cóng cǐ tì yé zhēng', ex: '木兰勇敢孝顺，甘愿代父从军，体现家国情怀。' },
-    ],
-    boss: { q: '以下哪个意象最能代表《木兰诗》的家国情怀？', opts: ['黄河浪涛', '"但闻燕山胡骑鸣啾啾"', '明驼千里足', '对镜帖花黄'], ok: 1, ex: '胡骑鸣啾啾表现边塞紧张，呼应保家卫国的责任与担当。' },
+  {
+    floor:2, name:'家国情怀', bossName:'黄河之魂', bossTitle:'民族脊梁',
+    color:'#3d1a1a',
+    questions:[
+      {q:'《黄河颂》的词作者是谁?', opts:['冼星海','光未然','贺绿汀','聂耳'], ans:1,
+       note:'光未然作词，冼星海谱曲，合称《黄河大合唱》'},
+      {q:'《黄河颂》将黄河比喻成什么?', opts:['母亲','父亲','长城','巨龙'], ans:0,
+       note:'黄河——中华民族的母亲河，哺育了无数子孙'},
+      {q:'《最后一课》的故事发生在哪个国家?', opts:['中国','法国','德国','英国'], ans:1,
+       note:'都德《最后一课》发生在普法战争后被割让的法国阿尔萨斯'},
+      {q:'《最后一课》的主人公小弗朗士最后悔的事是什么?', opts:['没努力学法语','没交作业','逃学','不听话'], ans:0,
+       note:'小弗朗士悔恨自己以前没有认真学法语，而今却要失去学习机会'},
+      {q:'《土地的誓言》的作者是谁?', opts:['端木蕻良','萧红','老舍','巴金'], ans:0,
+       note:'端木蕻良在《土地的誓言》中表达了对东北故土的深沉思念'},
+      {q:'"九一八事变"发生于哪一年?', opts:['1929','1931','1937','1945'], ans:1,
+       note:'1931年9月18日，日本发动九一八事变，侵占东三省'},
+      {q:'《木兰诗》中木兰替谁从军?', opts:['哥哥','父亲','丈夫','弟弟'], ans:1,
+       note:'阿爷无大儿，木兰无长兄——木兰替父从军'},
+      {q:'"将军百战死，壮士十年归"出自哪首诗?', opts:['《木兰诗》','《静夜思》','《春望》','《观沧海》'], ans:0,
+       note:'《木兰诗》中的名句，写战争的惨烈和归来的喜悦'},
+      {q:'《黄河颂》属于哪种文学体裁?', opts:['小说','散文','诗歌','戏剧'], ans:2,
+       note:'《黄河颂》是组诗《黄河大合唱》中的第二乐章，体裁为诗歌'},
+    ]
   },
-
-  3: {
-    name: '凡人歌',
-    bossName: '阿长的记忆',
-    bossTitle: '朴实关怀 · 平凡伟大',
-    qs: [
-      { q: '阿长为"我"买《山海经》的行为表现了她什么品质？', opts: ['愚昧迷信', '朴实善良，真心关爱孩子', '自私自利', '狡猾势利'], ok: 1, ex: '阿长不识字却努力实现孩子心愿，朴实中见伟大情怀。' },
-      { q: '卖油翁"惟手熟尔"说明了什么道理？', opts: ['天赋决定一切', '熟能生巧，技艺精于勤学苦练', '运气最重要', '傲慢者无敌'], ok: 1, ex: '实践出真知，熟能生巧，勤练可超越天赋。' },
-      { q: '《台阶》中父亲的核心愿望是？', opts: ['发家致富', '提高台阶以彰显尊严地位', '培养儿子成才', '外出闯荡见世面'], ok: 1, ex: '台阶越高代表地位越高，父亲渴望受到尊重，折射劳动者的尊严追求。' },
-      { q: '阿长"切切察察"的描写有什么作用？', opts: ['突出她烦琐多事，但为后文铺垫，先抑后扬', '表现她英勇无畏', '体现她美丽动人', '突出她博学多才'], ok: 0, ex: '先写其缺点，再写买书之情，形成鲜明对比，令人物更加真实感人。' },
-      { q: '卖油翁与陈尧咨的对话揭示了什么道理？', opts: ['人外有人，不可自矜', '蔑视他人是对的', '骄傲自满可以成功', '武力决定一切'], ok: 0, ex: '不可因一技之长而骄傲自满，技无止境，应虚心向学。' },
-      { q: '《台阶》中"台阶"在文中的象征意义是？', opts: ['具体的建筑台阶', '家庭的尊严与社会地位', '财富的象征', '年龄的增长'], ok: 1, ex: '台阶是父亲追求尊严与社会认可的具体象征。' },
-      { q: '鲁迅在《阿长与〈山海经〉》中对阿长的态度变化是？', opts: ['始终厌恶', '先讨厌后喜爱，转变来自买书一事', '始终喜爱', '无所谓'], ok: 1, ex: '文章以先抑后扬的手法，使阿长买书的情节产生强烈感人效果。' },
-      { q: '陈尧咨对卖油翁"轻松倒油"的反应经历了哪些变化？', opts: ['始终赞叹', '先鄙视后叹服，最终哂笑离去', '一直冷漠', '勃然大怒不听解释'], ok: 1, ex: '由轻蔑到"忿然"到最终接受，揭示骄傲与谦逊的对比。' },
-      { q: '《山地回忆》中妞儿的形象特点是？', opts: ['刁蛮任性', '温柔贤淑，大家闺秀', '爽朗质朴，善良热情', '懒惰散漫'], ok: 2, ex: '妞儿体现了劳动人民的善良率真与淳朴之美。' },
-    ],
-    storys: [
-      { text: '哥儿，有画儿的"三哼经"，我给你买来了！', py: 'gēr，yǒu huàr de "sān hēng jīng"，wǒ gěi nǐ mǎi lái le！', ex: '阿长不识字却记住孩子心愿，朴实关怀令人动容。' },
-      { text: '我亦无他，惟手熟尔。', py: 'wǒ yì wú tā，wéi shǒu shú ěr', ex: '卖油翁平淡一语，蕴含"熟能生巧"的深刻哲理。' },
-      { text: '父亲总觉得我们家的台阶低。', py: 'fù qīn zǒng jué de wǒ men jiā de tái jiē dī', ex: '一句朴素的话，道出父辈对尊严的执念与渴望。' },
-    ],
-    boss: { q: '阿长与卖油翁的共同之处是？', opts: ['身份低微，却拥有令人敬佩的善良与智慧', '博学多才，名满天下', '好高骛远，不切实际', '飞扬跋扈，骄傲自大'], ok: 0, ex: '两者皆平凡中见伟大，身份卑微却品格闪光。' },
+  {
+    floor:3, name:'凡人歌', bossName:'老王之影', bossTitle:'善良之魂',
+    color:'#1a2e1a',
+    questions:[
+      {q:'《老王》的作者是谁?', opts:['冰心','杨绛','张爱玲','萧红'], ans:1,
+       note:'杨绛先生写《老王》，记叙一位普通三轮车夫的善良与不幸'},
+      {q:'老王送给作者的最后礼物是什么?', opts:['鸡蛋和香油','钱','书','花'], ans:0,
+       note:'临死前老王踉跄地送来香油和鸡蛋，令作者心酸不已'},
+      {q:'《驿路梨花》的作者是谁?', opts:['彭荆风','老舍','孙犁','汪曾祺'], ans:0,
+       note:'彭荆风《驿路梨花》，故事发生在云南哀牢山的深山小屋'},
+      {q:'《驿路梨花》中，是谁最早建造了那个小茅屋?', opts:['解放军','梨花','哈尼族老人','瑶族老人'], ans:0,
+       note:'解放军战士为方便行人，最先建造了这个小茅屋'},
+      {q:'"梨花处处开"在文中象征着什么?', opts:['春天来了','雷锋精神代代传','战争结束','丰收喜悦'], ans:1,
+       note:'梨花象征助人为乐的雷锋精神，在人民中世代传承'},
+      {q:'《台阶》的作者是谁?', opts:['李森祥','余华','莫言','贾平凹'], ans:0,
+       note:'李森祥《台阶》，描写农村父亲为建有高台阶的新屋奋斗一生'},
+      {q:'父亲为什么一定要建高台阶的新屋?', opts:['炫耀财富','获得尊重','舒适生活','儿子婚事'], ans:1,
+       note:'在农村，台阶高低象征着一家人的地位，父亲渴望被尊重'},
+      {q:'《卖油翁》的作者是北宋文学家？', opts:['欧阳修','苏轼','王安石','范仲淹'], ans:0,
+       note:'欧阳修《卖油翁》，通过卖油翁熟能生巧说明"熟能生巧"的道理'},
+      {q:'"我亦无他，唯手熟尔"说明什么道理?', opts:['天赋重要','熟能生巧','勤能补拙','知足常乐'], ans:1,
+       note:'卖油翁的话揭示：没有天才，只有熟练——熟能生巧'},
+    ]
   },
-
-  4: {
-    name: '修身养德',
-    bossName: '陋室主人',
-    bossTitle: '安贫乐道 · 清风朗月',
-    qs: [
-      { q: '《陋室铭》中"惟吾德馨"一句体现了作者什么人生态度？', opts: ['追求奢华富贵', '安贫乐道，高洁志趣', '消极避世，脱离现实', '功利主义'], ok: 1, ex: '"惟吾德馨"意为只要品德高尚，陋室也不再简陋。' },
-      { q: '《爱莲说》"出淤泥而不染"象征的品质是？', opts: ['与世同流合污', '洁身自好，不随俗流', '富贵骄人，高高在上', '低调内敛，随遇而安'], ok: 1, ex: '莲花出污泥而不染，象征君子在浮华世界中保持高洁品格。' },
-      { q: '《驿路梨花》中"驿路梨花"的标题象征什么？', opts: ['爱情的美好', '雷锋精神与助人为乐的美德', '离别的惆怅', '春天的伤感'], ok: 1, ex: '梨花洁白如助人之心，象征代代相传的善良与奉献精神。' },
-      { q: '"无丝竹之乱耳"的用意是？', opts: ['表明作者讨厌音乐', '追求清静高雅，精神自足的生活', '表达对亲人的思念', '表现贫穷困苦'], ok: 1, ex: '强调精神富足，不受世俗杂音干扰，体现高雅情趣。' },
-      { q: '周敦颐《爱莲说》以莲喻君子，属于什么写作手法？', opts: ['托物言志', '借景抒情', '直抒胸臆', '侧面烘托'], ok: 0, ex: '以莲花的品格来寄托自己追求高洁人格的志向，是"托物言志"。' },
-      { q: '《驿路梨花》展现的民族精神是？', opts: ['见利忘义，各自为政', '无私奉献，互帮互助', '自私自利，独善其身', '固步自封，故步自封'], ok: 1, ex: '梨花村民世代相传的助人精神，体现中华民族温情互助的美德。' },
-      { q: '《陋室铭》中作者将陋室比作什么，以自励？', opts: ['诸葛亮的草庐与扬雄的玄亭', '皇宫与豪宅', '学堂与市场', '山川与河流'], ok: 0, ex: '作者以"南阳诸葛庐""西蜀子云亭"自比，表明以古贤人为榜样的志向。' },
-      { q: '周敦颐对"菊"和"牡丹"的态度代表了什么？', opts: ['菊是隐逸者，牡丹是追求富贵者，他均不认同', '菊是隐逸，牡丹是富贵，他全部喜欢', '菊代表爱国，牡丹代表奉献', '无特别含义'], ok: 0, ex: '菊花代表隐逸，牡丹代表追慕富贵，两者均非他所好，唯独莲花象征君子之道。' },
-      { q: '何为"铭"这种文学体裁的特点？', opts: ['篇幅较长，叙事为主', '文字简短，多用韵文，用以警诫自勉', '浪漫主义色彩浓厚', '主要记录历史事件'], ok: 1, ex: '"铭"是古代刻在器物上用来警诫自己或称述功德的文字，多押韵。' },
-    ],
-    storys: [
-      { text: '斯是陋室，惟吾德馨。', py: 'sī shì lòu shì，wéi wú dé xīn', ex: '这是简陋的居室，只要品德高尚，居室便不再简陋。' },
-      { text: '莲，花之君子者也。', py: 'lián，huā zhī jūn zǐ zhě yě', ex: '莲花是花中的君子，象征高洁、独立、不随俗流的品格。' },
-      { text: '驿路梨花处处开。', py: 'yì lù lí huā chù chù kāi', ex: '雷锋精神遍地开花，助人为乐的美德代代相传。' },
-    ],
-    boss: { q: '《陋室铭》与《爱莲说》共同的思想精髓是？', opts: ['追求物质享受，崇尚奢华', '追求精神高洁，淡泊名利，不随俗流', '轻视劳动人民', '愤世嫉俗，逃避责任'], ok: 1, ex: '两篇均表现品德高尚、淡泊明志的人格追求。' },
+  {
+    floor:4, name:'修身养德', bossName:'君子之影', bossTitle:'德行之主',
+    color:'#2a1a3e',
+    questions:[
+      {q:'《陋室铭》的作者是谁?', opts:['王羲之','刘禹锡','陶渊明','苏轼'], ans:1,
+       note:'刘禹锡《陋室铭》：斯是陋室，惟吾德馨'},
+      {q:'"斯是陋室，惟吾德馨"中"德馨"是什么意思?', opts:['品德高尚','香气浓烈','才华横溢','家境贫寒'], ans:0,
+       note:'馨：香气，这里比喻品德高尚，道德芬芳'},
+      {q:'《爱莲说》中莲花象征的品格是?', opts:['富贵荣华','清廉高洁','坚韧不拔','博学多才'], ans:1,
+       note:'周敦颐以莲的"出淤泥而不染"象征君子高洁的品格'},
+      {q:'"出淤泥而不染，濯清涟而不妖"出自哪篇文章?', opts:['《陋室铭》','《爱莲说》','《观沧海》','《春望》'], ans:1,
+       note:'周敦颐《爱莲说》中的名句，是千古传诵的咏莲佳句'},
+      {q:'《河中石兽》选自纪昀的哪部作品?', opts:['《儒林外史》','《聊斋志异》','《阅微草堂笔记》','《世说新语》'], ans:2,
+       note:'纪昀(字晓岚)的《阅微草堂笔记》是清代著名笔记小说集'},
+      {q:'石兽最终在哪里找到?', opts:['河流下游','原来位置','河流上游','河岸边'], ans:2,
+       note:'因为水流的冲击使石兽逆流而上，在上游被找到'},
+      {q:'"然则天下之事，但知其一，不知其二者多矣"揭示什么道理?', opts:['做事要认真','遇事要多方考虑','读书要勤奋','为人要谦虚'], ans:1,
+       note:'不能只凭表面现象或书本知识推断，要考虑实际情况'},
+      {q:'《叶圣陶先生二三事》的作者是谁?', opts:['冰心','张中行','叶圣陶','汪曾祺'], ans:1,
+       note:'张中行写此文，记叙了叶圣陶先生待人宽、律己严的品格'},
+      {q:'叶圣陶先生在语文方面最主要的主张是什么?', opts:['多写少读','简洁明确','文字规范','多用典故'], ans:2,
+       note:'叶圣陶主张语文要规范，反对生造词语，强调用词准确'},
+    ]
   },
-
-  5: {
-    name: '自然人生',
-    bossName: '紫藤守望者',
-    bossTitle: '生命长河 · 永不止息',
-    qs: [
-      { q: '《紫藤萝瀑布》"生命的长河是无止境的"表达了什么？', opts: ['对生命的悲观绝望', '豁达乐观，相信生命生生不息', '对现实的逃避', '对个人得失的焦虑'], ok: 1, ex: '作者由紫藤萝的盛衰感悟到生命永恒，化悲痛为前行的力量。' },
-      { q: '《望岳》"会当凌绝顶，一览众山小"抒发了什么？', opts: ['对绝望处境的感叹', '豪情壮志，不畏艰难，俯视一切', '游山玩水的闲情', '对家乡的思念'], ok: 1, ex: '诗人登上顶峰的豪情壮志，积极进取，俯视一切的雄心。' },
-      { q: '"山重水复疑无路，柳暗花明又一村"蕴含什么哲理？', opts: ['绝境之中往往蕴含转机与希望', '绝望无出路', '旅途就此结束', '迷路无法返回'], ok: 0, ex: '困境中坚持就会发现转机，绝处逢生，充满辩证哲思。' },
-      { q: '"不畏浮云遮望眼，自缘身在最高层"象征什么？', opts: ['视线被天气阻碍', '高瞻远瞩，不为小人蒙蔽，胸怀远大', '天气变化无常', '恐高症患者的感受'], ok: 1, ex: '站得高就看得远，不被眼前的"浮云"（小人或困难）遮蔽视野。' },
-      { q: '《紫藤萝瀑布》中紫藤萝由衰转盛寄托了什么情感？', opts: ['感悟家族盛衰，以花叹人', '追求个人享乐', '深陷悲痛无法自拔', '逃避现实'], ok: 0, ex: '作者以花喻人，感悟生命的力量，化悲痛为奋进的动力。' },
-      { q: '《己亥杂诗》"落红不是无情物，化作春泥更护花"象征什么精神？', opts: ['牺牲自我、奉献的精神', '凋零败落的悲凉', '没落衰败的无奈', '凄凉绝望的心境'], ok: 0, ex: '落花化为春泥护育新花，象征无私奉献、甘为后人铺路的精神。' },
-      { q: '《望岳》是杜甫什么时期的作品，体现了怎样的心境？', opts: ['晚年，忧国忧民', '青年，意气风发，豪情万丈', '中年，壮志难酬', '老年，淡泊宁静'], ok: 1, ex: '《望岳》是杜甫青年时期作品，充满青春朝气与进取精神。' },
-      { q: '《游山西村》的主旨是？', opts: ['批判农村落后', '表现田园生活之美与世外桃源式的欢乐', '赞美山水自然', '表达对城市的向往'], ok: 1, ex: '作者通过游村经历，展现淳朴的农村风情与人情之美。' },
-      { q: '"沉舟侧畔千帆过，病树前头万木春"揭示了什么道理？', opts: ['旧事物消亡，新事物必然蓬勃发展', '沉船危险，要当心', '病树象征绝望', '千帆竞发无意义'], ok: 0, ex: '旧事物虽然衰亡，但新事物必然充满生机，体现历史发展的乐观规律。' },
-    ],
-    storys: [
-      { text: '花和人都会遇到各种各样的不幸，但生命的长河是无止境的。', py: 'huā hé rén dōu huì yù dào bù xìng，dàn shēng mìng de cháng hé shì wú zhǐ jìng de', ex: '坦然面对不幸，以生命长河的眼光看待一切，豁达而深沉。' },
-      { text: '不畏浮云遮望眼，自缘身在最高层。', py: 'bù wèi fú yún zhē wàng yǎn，zì yuán shēn zài zuì gāo céng', ex: '站得高则看得远，不为眼前困难所蒙蔽，充满豪迈之气。' },
-      { text: '落红不是无情物，化作春泥更护花。', py: 'luò hóng bú shì wú qíng wù，huà zuò chūn ní gèng hù huā', ex: '无私奉献，甘为后人铺路，精神永不止息。' },
-    ],
-    boss: { q: '下列哪句诗最契合《紫藤萝瀑布》的生命哲思？', opts: ['"柳暗花明又一村"', '"化作春泥更护花"', '"沉舟侧畔千帆过，病树前头万木春"', '"人生自古谁无死"'], ok: 2, ex: '旧事物衰亡，新生命涌现，生命轮转不息，与文章主旨高度契合。' },
+  {
+    floor:5, name:'自然人生', bossName:'紫藤萝之灵', bossTitle:'生命之主',
+    color:'#1a3a2a',
+    questions:[
+      {q:'《紫藤萝瀑布》的作者是谁?', opts:['冰心','宗璞','席慕蓉','三毛'], ans:1,
+       note:'宗璞《紫藤萝瀑布》通过赏花抒发了对生命的感悟'},
+      {q:'"生命的长河是无止境的"是文中的什么?', opts:['开头','结尾','中心句','题记'], ans:2,
+       note:'作者由眼前的紫藤萝花联想到人生，悟出生命长河无止境'},
+      {q:'《一棵小桃树》的作者是谁?', opts:['贾平凹','莫言','余华','路遥'], ans:0,
+       note:'贾平凹《一棵小桃树》，以小桃树的成长比喻自己的人生经历'},
+      {q:'小桃树在文中象征着什么?', opts:['童年的记忆','作者的理想与奋斗精神','农村生活','爱情'], ans:1,
+       note:'小桃树历经风雨仍顽强生长，象征作者不屈的理想和奋斗精神'},
+      {q:'《假如生活欺骗了你》的作者是哪国诗人?', opts:['英国','法国','俄国','美国'], ans:2,
+       note:'普希金是俄国伟大的诗人，被称为"俄国文学之父"'},
+      {q:'"而那过去了的，就会成为亲切的怀恋"表达了什么情感?', opts:['悲观失望','乐观向上','无所谓','愤世嫉俗'], ans:1,
+       note:'普希金劝导人们要乐观地对待生活，相信未来充满希望'},
+      {q:'《未选择的路》的作者是谁?', opts:['惠特曼','弗罗斯特','狄金森','爱默生'], ans:1,
+       note:'美国诗人弗罗斯特的《未选择的路》是世界著名诗作'},
+      {q:'诗中两条路象征着什么?', opts:['人生中的两次旅行','人生中面临的选择','自然界的岔路','战争中的两种选择'], ans:1,
+       note:'两条路是比喻，象征人生中不同的选择与方向'},
+      {q:'《紫藤萝瀑布》中作者的心情变化是?', opts:['高兴到悲伤','悲痛到宁静喜悦','平静到激动','无聊到充实'], ans:1,
+       note:'作者由弟弟患病的悲痛，在花的感召下转为宁静和喜悦'},
+    ]
   },
+  {
+    floor:6, name:'探索科学', bossName:'宇宙终主', bossTitle:'科学之神',
+    color:'#0a0a20',
+    questions:[
+      {q:'《伟大的悲剧》描写的是哪次探险?', opts:['登珠峰','南极探险','北极探险','深海探测'], ans:1,
+       note:'茨威格《伟大的悲剧》描述斯科特率队到达南极却发现已被人捷足先登的故事'},
+      {q:'谁比斯科特更早到达南极?', opts:['沙克尔顿','阿蒙森','皮尔里','拜尔德'], ans:1,
+       note:'挪威人阿蒙森比英国人斯科特早35天到达南极点'},
+      {q:'《太空一日》的作者是谁?', opts:['杨利伟','翟志刚','费俊龙','刘洋'], ans:0,
+       note:'杨利伟是中国首位进入太空的宇航员，此文记录了他的太空经历'},
+      {q:'杨利伟在飞船上听到的神秘"敲击声"，后来证实是什么?', opts:['外星人','飞船结构热胀冷缩','宇宙噪音','发动机故障'], ans:1,
+       note:'飞船在太空中由于温差变化，舱体发生热胀冷缩产生声音'},
+      {q:'《带上她的眼睛》是哪种文学体裁?', opts:['散文','诗歌','科幻小说','报告文学'], ans:2,
+       note:'刘慈欣的《带上她的眼睛》是科幻短篇小说'},
+      {q:'《带上她的眼睛》中"她"最终在哪里?', opts:['月球基地','地球内部','太空站','南极基地'], ans:1,
+       note:'那位女地质工程师的飞船沉入地球深处，永远无法返回'},
+      {q:'《河中石兽》中僧侣和讲学者的错误在于什么?', opts:['不够努力','脱离实际，凭空推想','没有文化','不尊重老人'], ans:1,
+       note:'他们犯了本本主义的错误，缺乏实践经验'},
+      {q:'《伟大的悲剧》中"悲剧"指什么？"伟大"指什么?', opts:['探险失败；坚强意志','探险成功；伟大发现','回国无望；献身精神','第二名到达；精神可嘉'], ans:0,
+       note:'"悲剧"指斯科特等人最终全部遇难；"伟大"指他们的诚信和献身精神'},
+      {q:'刘慈欣是哪部科幻小说的作者?', opts:['《三体》','《流浪地球》','两部都是','《星际迷航》'], ans:2,
+       note:'刘慈欣既是《三体》又是《流浪地球》的作者，中国最著名的科幻作家'},
+    ]
+  }
+];
 
-  6: {
-    name: '探索科学',
-    bossName: '落日六号领航员',
-    bossTitle: '地心孤勇 · 探索无畏',
-    qs: [
-      { q: '《太空一日》中杨利伟经历飞船共振时的表现是？', opts: ['慌张失措，大声呼救', '以坚强意志与专业素养坚持下来', '埋怨地面指挥', '主动放弃任务'], ok: 1, ex: '杨利伟镇定坚韧，体现航天员卓越的科学精神与心理素质。' },
-      { q: '《带上她的眼睛》中"她"的真实身份是？', opts: ['外星人', '落日六号地航飞船的女性领航员', '普通旅游者', '科学研究员'], ok: 1, ex: '她是被困于地球内部的地航员，永远无法返回地面。' },
-      { q: '科学精神的核心不包括以下哪一项？', opts: ['实事求是', '勇于创新', '迷信权威，不加质疑', '严谨细致'], ok: 2, ex: '科学精神强调质疑权威、实事求是，迷信权威与科学精神背道而驰。' },
-      { q: '杨利伟在太空中说"我没有看到长城"，这体现了什么精神？', opts: ['航天员视力不佳', '诚实求真的科学态度', '设备存在缺陷', '对任务消极应付'], ok: 1, ex: '拒绝迎合期待，坚持实事求是，体现严谨诚实的科学品格。' },
-      { q: '《带上她的眼睛》的叙述视角有何特点？', opts: ['第一人称有限视角，通过"我"感知女领航员的世界', '全知视角，无所不知', '第二人称，直接对话读者', '上帝视角，俯瞰一切'], ok: 0, ex: '以第一人称"我"的有限视角叙述，使读者与主人公共同经历情感震撼。' },
-      { q: '"蛟龙"探海与神舟飞天共同体现了？', opts: ['个人英雄主义', '探索未知、挑战极限的科学精神', '追求名利富贵', '政治宣传目的'], ok: 1, ex: '两者均体现中国科技工作者勇于探索、不畏艰险的精神。' },
-      { q: '《太空一日》文体特点是？', opts: ['小说', '叙事性散文（自述文章）', '议论文', '诗歌'], ok: 1, ex: '这是杨利伟的亲历叙述，属于叙事性散文，真实记录太空飞行感受。' },
-      { q: '《带上她的眼睛》结尾"我"意识到了什么，令全文升华？', opts: ['意识到旅行无意义', '意识到女领航员永远困于地下，感受到孤独与伟大', '意识到自己粗心大意', '意识到技术可以解决一切'], ok: 1, ex: '结尾揭示真相，使前文所有细节充满了悲悯与震撼，令人久久难忘。' },
-      { q: '本单元科学主题的共同精神内核是？', opts: ['遵从天意，顺应自然', '实事求是，勇敢探索，不畏牺牲', '权威至上，遵守规则', '迷信经典，不敢创新'], ok: 1, ex: '尊重事实，敢于探索未知，甘于奉献，是科学精神的永恒内核。' },
-    ],
-    storys: [
-      { text: '我以为自己要牺牲了。', py: 'wǒ yǐ wéi zì jǐ yào xī shēng le', ex: '杨利伟平静地直面生死，坚韧不拔，折射中国航天人的英雄气概。' },
-      { text: '不管走到哪里，我都不会离她更远了。', py: 'bù guǎn zǒu dào nǎ lǐ，wǒ dōu bú huì lí tā gèng yuǎn le', ex: '女领航员永困地心，这句话充满悲悯与对科学奉献精神的礼赞。' },
-      { text: '我是落日六号的领航员。', py: 'wǒ shì luò rì liù hào de lǐng háng yuán', ex: '简短一句，承载着无尽的孤独、勇气与奉献，令人动容。' },
-    ],
-    boss: { q: '从科学精神角度审视本单元，所有篇目共同强调的是？', opts: ['遵从天意，顺其自然', '实事求是，勇敢无畏，甘于奉献', '权威至上，不可质疑', '迷信经典，循规蹈矩'], ok: 1, ex: '尊重事实，敢于探索，甘于奉献——这是一切科学精神的基石。' },
-  },
-};
+/* Fill-in-blank scroll pickups (2 per floor) */
+const FILLS = [
+  [{q:'邓稼先是中国的"两弹____人"', ans:'元勋', hint:'元=第一，勋=功勋'},
+   {q:'斯是陋室，惟吾德____', ans:'馨', hint:'香气，比喻品德高尚'}],
+  [{q:'黄河颂中，黄河被称为中华民族的____河', ans:'母亲', hint:'哺育了无数子孙'},
+   {q:'木兰替____从军', ans:'父亲', hint:'阿爷无大儿，木兰无长兄'}],
+  [{q:'老王临死前送来香油和____', ans:'鸡蛋', hint:'象征他最后的善意'},
+   {q:'台阶越高，代表家庭地位越____', ans:'高', hint:'台阶与地位成正比'}],
+  [{q:'出淤泥而不____', ans:'染', hint:'这是莲花最著名的品质'},
+   {q:'河中石兽最终在上游被____到', ans:'找', hint:'因水流冲击逆流而上'}],
+  [{q:'《紫藤萝瀑布》中：生命的____是无止境的', ans:'长河', hint:'用长河比喻生命'},
+   {q:'弗罗斯特写了《未选择的____》', ans:'路', hint:'两条路象征人生选择'}],
+  [{q:'杨利伟是中国第____位进入太空的宇航员', ans:'一', hint:'神舟五号，2003年'},
+   {q:'刘慈欣的科幻代表作《____》获雨果奖', ans:'三体', hint:'中国科幻最高成就'}],
+];
 
-// ═══════════════════════════════════════════════════════════
-// 2. STATE
-// ═══════════════════════════════════════════════════════════
-
-const SAVE_KEY = 'dungeon_v4';
-
-function mkRooms() {
-  const r = {};
-  for (let i = 1; i <= 6; i++) r[i] = { battle: false, story: false, boss: false, qi: 0 };
-  return r;
+/* =====================================================================
+   LEVEL GEOMETRY  (6 hand-crafted levels)
+   ===================================================================== */
+function makeLevels() {
+  const GH = 388;
+  return [
+    { // Floor 1
+      width:2400, groundY:GH,
+      platforms:[
+        [200,320,120,16],[380,280,100,16],[520,240,130,16],
+        [700,300,110,16],[860,260,140,16],[1040,220,120,16],
+        [1200,300,100,16],[1350,260,130,16],[1500,220,110,16],
+        [1650,300,120,16],[1800,260,100,16],[1950,320,140,16],
+        [2100,280,110,16],[2200,240,100,16],
+      ],
+      enemies:[
+        {x:500,y:GH-32,id:0},{x:900,y:GH-32,id:1},{x:1300,y:GH-32,id:2},
+        {x:1700,y:GH-32,id:3},{x:2000,y:GH-32,id:4},
+      ],
+      boss:{x:2280,y:GH-48},
+      scrolls:[{x:650,y:GH-40,fi:0},{x:1550,y:GH-40,fi:1}],
+      exit:{x:2350,y:GH-40},
+    },
+    { // Floor 2
+      width:2600, groundY:GH,
+      platforms:[
+        [150,300,140,16],[340,260,110,16],[500,220,120,16],
+        [670,280,100,16],[820,240,130,16],[980,200,110,16],
+        [1140,260,120,16],[1300,300,100,16],[1460,260,130,16],
+        [1620,220,120,16],[1790,280,100,16],[1940,240,110,16],
+        [2100,300,120,16],[2260,260,100,16],[2420,220,130,16],
+      ],
+      enemies:[
+        {x:450,y:GH-32,id:0},{x:850,y:GH-32,id:1},{x:1250,y:GH-32,id:2},
+        {x:1650,y:GH-32,id:3},{x:2050,y:GH-32,id:4},
+      ],
+      boss:{x:2500,y:GH-48},
+      scrolls:[{x:700,y:GH-40,fi:0},{x:1700,y:GH-40,fi:1}],
+      exit:{x:2570,y:GH-40},
+    },
+    { // Floor 3
+      width:2500, groundY:GH,
+      platforms:[
+        [180,340,100,16],[330,300,110,16],[480,260,120,16],[640,220,100,16],
+        [780,280,130,16],[940,240,110,16],[1100,200,120,16],
+        [1260,260,100,16],[1420,300,110,16],[1580,260,130,16],
+        [1740,220,100,16],[1890,280,110,16],[2040,240,120,16],
+        [2200,300,100,16],[2350,260,110,16],
+      ],
+      enemies:[
+        {x:400,y:GH-32,id:0},{x:800,y:GH-32,id:1},{x:1200,y:GH-32,id:2},
+        {x:1600,y:GH-32,id:3},{x:2000,y:GH-32,id:4},
+      ],
+      boss:{x:2430,y:GH-48},
+      scrolls:[{x:550,y:GH-40,fi:0},{x:1450,y:GH-40,fi:1}],
+      exit:{x:2480,y:GH-40},
+    },
+    { // Floor 4
+      width:2700, groundY:GH,
+      platforms:[
+        [200,320,130,16],[380,280,110,16],[560,240,120,16],
+        [730,300,100,16],[890,260,130,16],[1060,220,110,16],
+        [1230,280,120,16],[1400,240,100,16],[1570,200,130,16],
+        [1750,260,110,16],[1920,300,120,16],[2080,260,100,16],
+        [2250,220,130,16],[2430,280,110,16],[2590,240,100,16],
+      ],
+      enemies:[
+        {x:480,y:GH-32,id:0},{x:900,y:GH-32,id:1},{x:1350,y:GH-32,id:2},
+        {x:1780,y:GH-32,id:3},{x:2200,y:GH-32,id:4},
+      ],
+      boss:{x:2650,y:GH-48},
+      scrolls:[{x:630,y:GH-40,fi:0},{x:1650,y:GH-40,fi:1}],
+      exit:{x:2680,y:GH-40},
+    },
+    { // Floor 5
+      width:2800, groundY:GH,
+      platforms:[
+        [160,330,120,16],[340,290,100,16],[500,250,130,16],[670,210,110,16],
+        [840,270,120,16],[1010,230,100,16],[1170,190,130,16],
+        [1340,250,110,16],[1510,290,120,16],[1680,250,100,16],
+        [1850,210,130,16],[2020,270,110,16],[2190,230,120,16],
+        [2360,290,100,16],[2530,250,110,16],[2700,210,120,16],
+      ],
+      enemies:[
+        {x:520,y:GH-32,id:0},{x:980,y:GH-32,id:1},{x:1420,y:GH-32,id:2},
+        {x:1860,y:GH-32,id:3},{x:2300,y:GH-32,id:4},
+      ],
+      boss:{x:2760,y:GH-48},
+      scrolls:[{x:700,y:GH-40,fi:0},{x:1760,y:GH-40,fi:1}],
+      exit:{x:2780,y:GH-40},
+    },
+    { // Floor 6
+      width:3000, groundY:GH,
+      platforms:[
+        [200,340,110,16],[380,300,120,16],[560,260,100,16],[730,220,130,16],
+        [910,280,110,16],[1090,240,120,16],[1270,200,100,16],
+        [1450,260,130,16],[1630,300,110,16],[1810,260,120,16],
+        [1990,220,100,16],[2170,280,130,16],[2360,240,110,16],
+        [2550,200,120,16],[2740,260,100,16],[2900,300,110,16],
+      ],
+      enemies:[
+        {x:560,y:GH-32,id:0},{x:1050,y:GH-32,id:1},{x:1550,y:GH-32,id:2},
+        {x:2050,y:GH-32,id:3},{x:2540,y:GH-32,id:4},
+      ],
+      boss:{x:2950,y:GH-48},
+      scrolls:[{x:800,y:GH-40,fi:0},{x:1900,y:GH-40,fi:1}],
+      exit:{x:2980,y:GH-40},
+    },
+  ];
 }
 
-let G = {
-  floor: 1, hp: 100, xp: 0,
-  streak: 0,     // current correct-answer streak across whole session
-  cleared: {},
-  rooms: mkRooms(),
+/* =====================================================================
+   COLOR PALETTES per floor
+   ===================================================================== */
+const PAL = {
+  1:{wall:'#0c1020',plat:'#2a3560',torch:'#4060ff',glow:'rgba(40,60,255,',fog:'#0c1020',accent:'#5080ff'},
+  2:{wall:'#1c0808',plat:'#4a1a1a',torch:'#ff5020',glow:'rgba(255,80,32,',fog:'#1c0808',accent:'#ff7040'},
+  3:{wall:'#0a1808',plat:'#1a3a15',torch:'#40c040',glow:'rgba(64,192,64,',fog:'#0a1808',accent:'#60e060'},
+  4:{wall:'#1a0a2e',plat:'#3a1a5e',torch:'#c060ff',glow:'rgba(192,96,255,',fog:'#1a0a2e',accent:'#d080ff'},
+  5:{wall:'#081820',plat:'#1a3a40',torch:'#00c8d8',glow:'rgba(0,200,216,',fog:'#081820',accent:'#40e0f0'},
+  6:{wall:'#040408',plat:'#0a0a20',torch:'#ff8000',glow:'rgba(255,128,0,',fog:'#040408',accent:'#ffaa20'},
 };
 
-function saveGame() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(G)); } catch (_) {} }
+/* =====================================================================
+   CANVAS + GLOBAL STATE
+   ===================================================================== */
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const EXPLORE_H = 420;
+const BATTLE_H  = 200;
+const W = 800;
+cv.width  = W;
+cv.height = EXPLORE_H;
 
+const GRAVITY    = 0.45;
+const JUMP_FORCE = -9.5;
+const SPEED      = 3.5;
+const COYOTE_MAX = 8;
+
+let gameMode = 'explore';
+let currentFloor = 0;
+let levels;
+
+let pl = {};
+function resetPlayer(lv) {
+  pl = {
+    x: 80, y: lv.groundY - 32,
+    vx: 0, vy: 0,
+    w: 20, h: 32,
+    onGround: false,
+    facing: 1,
+    state: 'idle',
+    hurtTimer: 0,
+    coyoteTime: 0,
+    frame: 0,
+    frameTimer: 0,
+  };
+}
+
+let cam = { x: 0 };
+let enemies = [];
+let scrolls = [];
+let bossDefeated = false;
+
+let playerHP  = 100;
+let playerXP  = 0;
+let streakVal = 0;
+let invincible = 0;
+
+let particles = [];
+let embers    = [];
+
+let battleEnemy   = null;
+let battleIsBoss  = false;
+let battleQueue   = [];
+let battleRound   = 0;
+let battleCorrect = 0;
+let battlePhase   = 'question';
+let timerInterval = null;
+
+let fillData   = null;
+let fillResult = null;
+
+let frameCount = 0;
+let raf;
+
+const keys = {};
+let touchLeft = false, touchRight = false, jumpPressed = false;
+
+/* =====================================================================
+   SAVE / LOAD
+   ===================================================================== */
+const SAVE_KEY = 'dungeon_v5';
+function saveGame() {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+      floor: currentFloor,
+      hp: playerHP,
+      xp: playerXP,
+      streak: streakVal,
+      defeatedEnemies: enemies.map(e => e.defeated),
+      defeatedBoss: bossDefeated,
+      collectedScrolls: scrolls.map(s => s.collected),
+    }));
+  } catch(e) {}
+}
 function loadGame() {
   try {
-    const raw = localStorage.getItem(SAVE_KEY);
-    if (!raw) return;
-    const s = JSON.parse(raw);
-    G = s;
-    if (!G.rooms)   G.rooms   = mkRooms();
-    if (!G.cleared) G.cleared = {};
-    if (G.streak == null) G.streak = 0;
-    for (let i = 1; i <= 6; i++) {
-      if (!G.rooms[i]) G.rooms[i] = { battle: false, story: false, boss: false, qi: 0 };
-      if (G.rooms[i].qi == null) G.rooms[i].qi = 0;
+    const d = JSON.parse(localStorage.getItem(SAVE_KEY));
+    if (!d) return false;
+    currentFloor = Math.max(0, Math.min(5, d.floor || 0));
+    playerHP     = d.hp  != null ? d.hp  : 100;
+    playerXP     = d.xp  != null ? d.xp  : 0;
+    streakVal    = d.streak != null ? d.streak : 0;
+    return d;
+  } catch(e) { return false; }
+}
+
+/* =====================================================================
+   LEVEL INIT
+   ===================================================================== */
+function initLevel(floorIdx, savedData) {
+  currentFloor  = floorIdx;
+  bossDefeated  = false;
+  gameMode      = 'explore';
+  invincible    = 0;
+  const lv = levels[floorIdx];
+  const fl = floorIdx + 1;
+
+  enemies = lv.enemies.map((e, i) => ({
+    x: e.x, y: lv.groundY - 4,
+    w: 28, h: 36,
+    startX: e.x,
+    patrolDist: 90,
+    dir: 1,
+    speed: 0.8 + floorIdx * 0.12,
+    id: e.id,
+    floor: fl,
+    defeated: savedData && savedData.defeatedEnemies ? !!savedData.defeatedEnemies[i] : false,
+    hurtTimer: 0,
+    hp: 3,
+  }));
+
+  scrolls = lv.scrolls.map((s, i) => ({
+    x: s.x, y: s.y,
+    fi: s.fi,
+    collected: savedData && savedData.collectedScrolls ? !!savedData.collectedScrolls[i] : false,
+  }));
+
+  if (savedData && savedData.defeatedBoss) bossDefeated = true;
+
+  resetPlayer(lv);
+  cam.x = 0;
+  particles = [];
+  embers    = [];
+
+  cv.height = EXPLORE_H;
+  document.getElementById('battleUI').hidden = true;
+  document.getElementById('levelWinScreen').hidden = true;
+  document.getElementById('deathScreen').hidden = true;
+  updateHUD();
+}
+
+/* =====================================================================
+   HUD
+   ===================================================================== */
+function updateHUD() {
+  const hp = Math.max(0, Math.min(100, playerHP));
+  document.getElementById('hpNum').textContent = hp;
+  document.getElementById('hpFill').style.width = hp + '%';
+  document.getElementById('xpNum').textContent  = playerXP;
+  document.getElementById('xpFill').style.width = Math.min(playerXP / 2, 100) + '%';
+  document.getElementById('flNum').textContent  = currentFloor + 1;
+  document.getElementById('floorName').textContent = DB[currentFloor].name;
+  document.getElementById('streakNum').textContent  = streakVal;
+  const sw = document.getElementById('streakWrap');
+  sw.classList.toggle('active', streakVal >= 2);
+}
+
+/* =====================================================================
+   AUDIO
+   ===================================================================== */
+let AC;
+function getAC() {
+  if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function beep(freq, dur, type, vol, detune) {
+  type   = type   || 'square';
+  vol    = vol    || 0.15;
+  detune = detune || 0;
+  try {
+    const ac = getAC();
+    const o  = ac.createOscillator();
+    const g  = ac.createGain();
+    o.type = type;
+    o.frequency.value = freq;
+    o.detune.value    = detune;
+    g.gain.setValueAtTime(vol, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + dur);
+    o.connect(g);
+    g.connect(ac.destination);
+    o.start();
+    o.stop(ac.currentTime + dur);
+  } catch(e) {}
+}
+function playSound(type) {
+  switch(type) {
+    case 'jump':    beep(320,0.08,'square',0.10); break;
+    case 'sword':   beep(440,0.05,'sawtooth',0.12); beep(660,0.08,'sawtooth',0.08,100); break;
+    case 'wrong':   beep(160,0.2,'sawtooth',0.14); beep(120,0.25,'sawtooth',0.10,-400); break;
+    case 'correct': beep(660,0.08,'square',0.10); beep(880,0.12,'square',0.08); break;
+    case 'victory': [523,659,784,1047].forEach(function(f,i){setTimeout(function(){beep(f,0.18,'square',0.12);},i*120);}); break;
+    case 'pickup':  beep(880,0.05,'square',0.08); beep(1047,0.08,'square',0.06); break;
+    case 'boss_intro': [200,160,120,100,80].forEach(function(f,i){setTimeout(function(){beep(f,0.14,'sawtooth',0.14);},i*80);}); break;
+    case 'boss_win':   [523,659,784,1047,1319].forEach(function(f,i){setTimeout(function(){beep(f,0.20,'square',0.12);},i*100);}); break;
+    case 'hurt':    beep(200,0.18,'sawtooth',0.18,-600); break;
+    case 'die':     [200,160,120,80].forEach(function(f,i){setTimeout(function(){beep(f,0.18,'sawtooth',0.16);},i*100);}); break;
+    case 'exit':    beep(523,0.15,'square',0.10); beep(784,0.20,'square',0.08); break;
+  }
+}
+
+/* =====================================================================
+   PARTICLES
+   ===================================================================== */
+function spawnParticles(x, y, color, n) {
+  n = n || 8;
+  for (var i=0; i<n; i++) {
+    var angle = Math.random()*Math.PI*2;
+    var speed = 1+Math.random()*3;
+    particles.push({
+      x:x, y:y,
+      vx: Math.cos(angle)*speed,
+      vy: Math.sin(angle)*speed - 2,
+      life:1, decay:0.04+Math.random()*0.04,
+      color:color, r:2+Math.random()*3,
+    });
+  }
+}
+function tickParticles() {
+  particles = particles.filter(function(p) {
+    p.x += p.vx; p.y += p.vy;
+    p.vy += 0.1; p.life -= p.decay;
+    return p.life > 0;
+  });
+}
+function drawParticles(ox) {
+  particles.forEach(function(p) {
+    ctx.globalAlpha = p.life;
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x - ox, p.y, p.r, 0, Math.PI*2);
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+}
+
+function tickEmbers() {
+  if (frameCount % 5 === 0) {
+    var p = PAL[currentFloor+1];
+    for (var i=0; i<2; i++) {
+      embers.push({
+        x: Math.random()*W + cam.x,
+        y: EXPLORE_H - 30 - Math.random()*180,
+        vy: -0.4-Math.random()*0.5,
+        vx: (Math.random()-0.5)*0.4,
+        life:1, decay:0.008+Math.random()*0.01,
+        color: p.torch,
+      });
     }
-  } catch (_) {}
+  }
+  embers = embers.filter(function(e) {
+    e.x += e.vx; e.y += e.vy; e.life -= e.decay;
+    return e.life > 0;
+  });
+}
+function drawEmbers(ox) {
+  embers.forEach(function(e) {
+    ctx.globalAlpha = e.life * 0.6;
+    ctx.fillStyle   = e.color;
+    ctx.fillRect(e.x - ox, e.y, 2, 2);
+  });
+  ctx.globalAlpha = 1;
 }
 
-function resetGame() {
-  localStorage.removeItem(SAVE_KEY);
-  G = { floor: 1, hp: 100, xp: 0, streak: 0, cleared: {}, rooms: mkRooms() };
-  setNotify('🌱 传说重新开始');
-  showIdle(); syncUI();
+/* =====================================================================
+   SPRITES
+   ===================================================================== */
+function drawPlayer(x, y, facing, state, frame, hurtTmr) {
+  ctx.save();
+  ctx.translate(x + 10, y + 16);
+  if (facing < 0) ctx.scale(-1, 1);
+
+  if (hurtTmr > 0 && (frameCount % 4 < 2)) ctx.globalAlpha = 0.45;
+
+  // Cape
+  ctx.fillStyle = '#8b0000';
+  ctx.fillRect(-8,-4,3,12);
+
+  // Body armor
+  ctx.fillStyle = '#c8960c';
+  ctx.fillRect(-6,-6,12,14);
+  ctx.fillStyle = '#a07008';
+  ctx.fillRect(-6,4,12,4);
+
+  // Head
+  ctx.fillStyle = '#c8960c';
+  ctx.fillRect(-5,-16,10,10);
+  ctx.fillStyle = '#2060c0';
+  ctx.fillRect(-4,-13,8,3);
+
+  // Cross on chest
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(-1,-5,2,8);
+  ctx.fillRect(-4,-2,8,2);
+
+  // Legs
+  ctx.fillStyle = '#a07008';
+  var legOff = (state === 'run' && frame % 2 === 0) ? 2 : 0;
+  ctx.fillRect(-5, 8, 4, 8+legOff);
+  ctx.fillRect(1,  8, 4, 8-legOff);
+
+  // Sword
+  ctx.fillStyle = '#d0d0d0';
+  ctx.fillRect(6,-8,3,14);
+  ctx.fillStyle = '#804000';
+  ctx.fillRect(4,-4,7,2);
+
+  ctx.globalAlpha = 1;
+  ctx.restore();
 }
 
-// ═══════════════════════════════════════════════════════════
-// 3. CANVAS / SPRITES
-// ═══════════════════════════════════════════════════════════
+var ENEMY_C = [
+  {body:'#405080',head:'#304060',eye:'#ff4040'},
+  {body:'#303030',head:'#202020',eye:'#ff8000'},
+  {body:'#706050',head:'#504030',eye:'#ffff00'},
+  {body:'#302050',head:'#201040',eye:'#d060ff'},
+  {body:'#204020',head:'#102010',eye:'#40ff40'},
+  {body:'#202040',head:'#101030',eye:'#00c8ff'},
+];
 
-const cv  = document.getElementById('cv');
-const ctx = cv.getContext('2d');
-let rafId = null;
-let scene = null;
+function drawEnemy(e, ox) {
+  if (e.defeated) return;
+  var sx = e.x - ox;
+  var sy = e.y;
+  var ci = Math.min(e.id, ENEMY_C.length-1);
+  var c  = ENEMY_C[ci];
 
-// Floor colour palettes
-const PAL = {
-  1: { wall: '#0c1020', wall2: '#080c18', floor: '#060810', torch: '#4060ff', glow: 'rgba(40,60,255,', accent: '#1a2050' },
-  2: { wall: '#1c0808', wall2: '#140606', floor: '#100404', torch: '#ff5020', glow: 'rgba(255,60,20,', accent: '#5a1010' },
-  3: { wall: '#181008', wall2: '#120c06', floor: '#0e0a04', torch: '#e09020', glow: 'rgba(200,140,20,', accent: '#403010' },
-  4: { wall: '#100818', wall2: '#0c0612', floor: '#080410', torch: '#c050ff', glow: 'rgba(180,50,255,', accent: '#30085a' },
-  5: { wall: '#081408', wall2: '#060e06', floor: '#040a04', torch: '#40e040', glow: 'rgba(40,200,40,',  accent: '#103010' },
-  6: { wall: '#081418', wall2: '#060e12', floor: '#040c10', torch: '#20d0ff', glow: 'rgba(20,200,255,', accent: '#103040' },
-};
+  ctx.save();
+  if (e.hurtTimer > 0 && (frameCount%4 < 2)) ctx.globalAlpha = 0.45;
 
-function startCanvas(w, h) {
-  cv.width = w; cv.height = h;
-  cv.style.display = 'block';
-  cv.style.width   = '100%';
-  cv.style.height  = h + 'px';
+  ctx.fillStyle = c.body;
+  ctx.fillRect(sx-8, sy-32, 16, 22);
+  ctx.fillStyle = c.head;
+  ctx.fillRect(sx-7, sy-46, 14, 15);
+  ctx.fillStyle = c.eye;
+  ctx.fillRect(sx-5, sy-42, 4, 3);
+  ctx.fillRect(sx+1, sy-42, 4, 3);
+  ctx.fillStyle = c.body;
+  ctx.fillRect(sx-7, sy-10, 6, 10);
+  ctx.fillRect(sx+1, sy-10, 6, 10);
+
+  // HP pips
+  for (var i=0; i<3; i++) {
+    ctx.fillStyle = i < e.hp ? '#ff4444' : '#222';
+    ctx.fillRect(sx-8+i*6, sy-54, 5, 4);
+  }
+
+  ctx.globalAlpha = 1;
+  ctx.restore();
 }
 
-function stopCanvas() {
-  if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-  cv.style.display = 'none';
-  scene = null;
+function drawBoss(lv, ox) {
+  if (bossDefeated) return;
+  var boss = lv.boss;
+  var sx = boss.x - ox;
+  var sy = boss.y;
+  var p  = PAL[currentFloor+1];
+  var pulse = 0.6 + 0.4*Math.sin(frameCount*0.08);
+
+  ctx.save();
+  ctx.shadowColor = p.torch;
+  ctx.shadowBlur  = 20*pulse;
+
+  ctx.fillStyle = '#2a0a0a';
+  ctx.fillRect(sx-14,sy-52,28,32);
+  ctx.fillStyle = '#600010';
+  ctx.fillRect(sx-12,sy-68,24,18);
+  ctx.fillStyle = p.torch;
+  ctx.fillRect(sx-8,sy-64,5,5);
+  ctx.fillRect(sx+3,sy-64,5,5);
+
+  // Crown spikes
+  ctx.fillStyle = '#ffd700';
+  for (var i=-2;i<=2;i++) ctx.fillRect(sx+i*5-2, sy-76+Math.abs(i)*4, 4, 5);
+
+  // HP pips (9)
+  for (var j=0; j<9; j++) {
+    ctx.fillStyle = '#ff4444';
+    ctx.fillRect(sx-24+j*5+1, sy-84, 4, 4);
+  }
+
+  ctx.shadowBlur = 0;
+  ctx.restore();
+
+  ctx.fillStyle = p.accent;
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('\u{1F451} ' + DB[currentFloor].bossName, sx, sy-90);
 }
 
-// ── Background ─────────────────────────────────────────────
+function drawScrollSprite(s, ox) {
+  if (s.collected) return;
+  var sx  = s.x - ox;
+  var bob = Math.sin(frameCount*0.06)*3;
+  ctx.save();
+  ctx.fillStyle = '#d4a020';
+  ctx.fillRect(sx-6, s.y-24+bob, 12, 16);
+  ctx.fillStyle = '#fff8e0';
+  ctx.fillRect(sx-5, s.y-22+bob, 10, 12);
+  ctx.fillStyle = '#806010';
+  ctx.font = '9px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('卷', sx, s.y-12+bob);
+  ctx.restore();
+}
 
-function drawBackground(floor, frame) {
-  const W = cv.width, H = cv.height;
-  const gY = H - 22;
-  const p  = PAL[floor] || PAL[1];
+function drawExit(lv, ox) {
+  if (!bossDefeated) return;
+  var ex = lv.exit;
+  var sx = ex.x - ox;
+  var pulse = 0.7 + 0.3*Math.sin(frameCount*0.05);
+  ctx.save();
+  ctx.shadowColor = '#ffd700';
+  ctx.shadowBlur  = 18*pulse;
+  ctx.font = '22px serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('\u{1F6AA}', sx, ex.y-8);
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '11px sans-serif';
+  ctx.fillText('下一层', sx, ex.y+10);
+  ctx.restore();
+}
 
-  // Gradient sky
-  const g = ctx.createLinearGradient(0, 0, 0, gY);
-  g.addColorStop(0, '#020204');
-  g.addColorStop(0.5, p.wall);
-  g.addColorStop(1, p.wall2);
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, W, gY);
+/* =====================================================================
+   BACKGROUND
+   ===================================================================== */
+function drawBackground(ox) {
+  var p  = PAL[currentFloor+1];
+  var lv = levels[currentFloor];
 
-  // Stone block pattern
-  const bW = 28, bH = 14;
-  for (let row = 0; row <= Math.ceil(gY / bH); row++) {
-    const odd = row % 2 !== 0;
-    for (let col = -1; col <= Math.ceil(W / bW) + 1; col++) {
-      const bx = col * bW - (odd ? bW / 2 : 0);
-      const by = row * bH;
-      const shade = ((row + col) % 3 === 0) ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.08)';
-      ctx.fillStyle = shade;
-      ctx.fillRect(bx + 1, by + 1, bW - 2, bH - 2);
-      ctx.strokeStyle = 'rgba(0,0,0,0.25)';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(bx, by, bW, bH);
+  ctx.fillStyle = p.wall;
+  ctx.fillRect(0, 0, W, EXPLORE_H);
+
+  // Brick lines
+  ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+  ctx.lineWidth = 1;
+  var bW = 48, bH = 24;
+  var bStartX = -(ox % bW);
+  for (var by = 0; by < EXPLORE_H; by += bH) {
+    var rowShift = (Math.floor(by/bH)%2) * (bW/2);
+    for (var bx = bStartX - bW + rowShift; bx < W + bW; bx += bW) {
+      ctx.strokeRect(bx, by, bW-1, bH-1);
     }
   }
 
   // Ground
-  ctx.fillStyle = '#281808';
-  ctx.fillRect(0, gY, W, 4);
-  ctx.fillStyle = '#180e04';
-  ctx.fillRect(0, gY + 4, W, H - gY - 4);
+  ctx.fillStyle = p.plat;
+  ctx.fillRect(0, lv.groundY, W, EXPLORE_H - lv.groundY);
+  ctx.fillStyle = 'rgba(255,255,255,0.08)';
+  ctx.fillRect(0, lv.groundY, W, 2);
 
-  // Floor tiles
-  ctx.strokeStyle = 'rgba(0,0,0,0.3)';
-  ctx.lineWidth = 1;
-  for (let x = 0; x < W; x += 28) {
-    ctx.beginPath(); ctx.moveTo(x, gY + 4); ctx.lineTo(x, H); ctx.stroke();
-  }
+  // Platforms
+  lv.platforms.forEach(function(pl) {
+    var sx = pl[0] - ox;
+    if (sx > -pl[2] && sx < W) {
+      ctx.fillStyle = p.plat;
+      ctx.fillRect(sx, pl[1], pl[2], pl[3]);
+      ctx.fillStyle = 'rgba(255,255,255,0.10)';
+      ctx.fillRect(sx, pl[1], pl[2], 2);
+    }
+  });
 
   // Torches
-  const tx1 = Math.floor(W * 0.11);
-  const tx2 = Math.floor(W * 0.89);
-  drawTorch(tx1, 22, frame, p);
-  drawTorch(tx2, 22, frame, p);
-
-  // Embers floating up
-  if (scene && scene.embers) {
-    scene.embers.forEach(e => {
-      ctx.fillStyle = `rgba(255,${e.g},20,${e.a.toFixed(2)})`;
-      ctx.fillRect(e.x, e.y, e.sz, e.sz);
-    });
+  var tSpacing = 300;
+  var tStart   = Math.floor(ox / tSpacing) * tSpacing;
+  for (var tx = tStart; tx < ox + W + tSpacing; tx += tSpacing) {
+    drawTorch(tx - ox, 80, p);
+    drawTorch(tx - ox + 150, 190, p);
   }
+
+  // Fog gradient
+  var grad = ctx.createLinearGradient(0,0,0,EXPLORE_H);
+  grad.addColorStop(0, p.fog + 'cc');
+  grad.addColorStop(0.4, 'rgba(0,0,0,0)');
+  grad.addColorStop(1, p.fog + '88');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, EXPLORE_H);
 }
 
-function drawTorch(tx, ty, frame, p) {
-  // Bracket
-  ctx.fillStyle = '#5a4010';
-  ctx.fillRect(tx - 2, ty + 2, 4, 9);
-  ctx.fillStyle = '#7a6020';
-  ctx.fillRect(tx - 1, ty + 3, 2, 7);
-
-  const fl  = 0.75 + Math.sin(frame * 0.21 + tx) * 0.25;
-  const fl2 = 0.80 + Math.sin(frame * 0.33 + tx * 2) * 0.20;
-
-  // Glow halo
-  const gr = ctx.createRadialGradient(tx, ty, 0, tx, ty, 22 * fl);
-  gr.addColorStop(0, p.glow + (0.22 * fl).toFixed(2) + ')');
-  gr.addColorStop(1, 'rgba(0,0,0,0)');
-  ctx.fillStyle = gr;
-  ctx.fillRect(tx - 28, ty - 18, 56, 38);
-
-  // Flame outer
-  ctx.save();
-  ctx.globalAlpha = fl * 0.65;
-  ctx.fillStyle = p.torch;
+function drawTorch(tx, ty, p) {
+  ctx.fillStyle = '#806030';
+  ctx.fillRect(tx-2, ty, 4, 12);
+  var fl = Math.sin(frameCount*0.3 + tx*0.1)*2;
+  ctx.shadowColor = p.torch;
+  ctx.shadowBlur  = 14 + fl;
+  ctx.fillStyle   = p.torch;
   ctx.beginPath();
-  ctx.ellipse(tx, ty - 3, 4 * fl2, 9 * fl, 0, 0, Math.PI * 2);
+  ctx.ellipse(tx, ty-5+fl*0.3, 4, 8, 0, 0, Math.PI*2);
   ctx.fill();
-  ctx.restore();
-
-  // Flame core (always white-yellow)
-  ctx.save();
-  ctx.globalAlpha = fl * 0.85;
-  ctx.fillStyle = '#fff4a0';
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
   ctx.beginPath();
-  ctx.ellipse(tx, ty - 4, 2.5 * fl2, 5.5 * fl, 0, 0, Math.PI * 2);
+  ctx.ellipse(tx, ty-6, 2, 4, 0, 0, Math.PI*2);
   ctx.fill();
-  ctx.restore();
+  ctx.shadowBlur = 0;
 }
 
-function tickEmbers() {
-  if (!scene || !scene.embers) return;
-  const W = cv.width;
-  scene.embers.forEach(e => {
-    e.x += e.vx; e.y += e.vy;
-    e.a  -= 0.012;
-    if (e.a <= 0) {
-      const side = Math.random() < 0.5 ? 0 : 1;
-      e.x  = (side === 0 ? W * 0.11 : W * 0.89) + (Math.random() - 0.5) * 6;
-      e.y  = 22 + Math.random() * 6;
-      e.vx = (Math.random() - 0.5) * 0.4;
-      e.vy = -0.4 - Math.random() * 0.9;
-      e.a  = 0.5 + Math.random() * 0.4;
-      e.g  = Math.floor(Math.random() * 80);
-      e.sz = 1 + Math.random() * 1.5;
-    }
-  });
-}
+/* =====================================================================
+   PHYSICS
+   ===================================================================== */
+function applyPhysics() {
+  var lv = levels[currentFloor];
 
-function mkEmbers() {
-  const W = cv.width;
-  return Array.from({ length: 22 }, () => {
-    const side = Math.random() < 0.5 ? 0 : 1;
-    return {
-      x:  (side === 0 ? W * 0.11 : W * 0.89) + (Math.random() - 0.5) * 6,
-      y:  22 - Math.random() * 40,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: -0.4 - Math.random() * 0.9,
-      a:  Math.random() * 0.7,
-      g:  Math.floor(Math.random() * 80),
-      sz: 1 + Math.random() * 1.5,
-    };
-  });
-}
+  pl.x += pl.vx;
+  pl.x  = Math.max(0, Math.min(lv.width - pl.w, pl.x));
 
-// ── Player sprite ──────────────────────────────────────────
+  pl.vy += GRAVITY;
+  pl.y  += pl.vy;
 
-function drawPlayer(px, py, s, bob, shk, lunge) {
-  const x = Math.round(px + shk + lunge);
-  const y = Math.round(py + bob);
-  // Head
-  ctx.fillStyle = '#e8dcc8'; ctx.fillRect(x - 4*s, y - 18*s, 8*s, 7*s);
-  // Helmet visor
-  ctx.fillStyle = '#c8913a'; ctx.fillRect(x - 4*s, y - 18*s, 8*s, 3*s);
-  ctx.fillStyle = '#a07020'; ctx.fillRect(x - 3*s, y - 18*s, 6*s, 2*s);
-  // Eyes
-  ctx.fillStyle = '#080608';
-  ctx.fillRect(x - 3*s, y - 15*s, 2*s, 2*s);
-  ctx.fillRect(x + 1*s,  y - 15*s, 2*s, 2*s);
-  // Glowing eyes
-  ctx.fillStyle = 'rgba(255,200,80,0.5)';
-  ctx.fillRect(x - 3*s, y - 15*s, 2*s, 1*s);
-  ctx.fillRect(x + 1*s,  y - 15*s, 2*s, 1*s);
-  // Body armour
-  ctx.fillStyle = '#c8913a'; ctx.fillRect(x - 3*s, y - 11*s, 6*s, 9*s);
-  // Cross
-  ctx.fillStyle = '#8b1a1a';
-  ctx.fillRect(x - 1*s, y - 10*s, 2*s, 7*s);
-  ctx.fillRect(x - 3*s, y - 8*s,  6*s, 2*s);
-  // Cape
-  ctx.fillStyle = '#3a0808'; ctx.fillRect(x - 5*s, y - 10*s, 2*s, 10*s);
-  // Arms
-  ctx.fillStyle = '#d4c8b4';
-  ctx.fillRect(x - 6*s, y - 11*s, 3*s, 7*s);
-  ctx.fillRect(x + 3*s, y - 11*s, 3*s, 7*s);
-  // Gauntlets
-  ctx.fillStyle = '#c8913a';
-  ctx.fillRect(x - 6*s, y - 5*s, 3*s, 2*s);
-  ctx.fillRect(x + 3*s, y - 5*s, 3*s, 2*s);
-  // Legs
-  ctx.fillStyle = '#2a1a0a';
-  ctx.fillRect(x - 3*s, y - 2*s, 2*s, 7*s);
-  ctx.fillRect(x + 1*s, y - 2*s, 2*s, 7*s);
-  // Boots
-  ctx.fillStyle = '#1a0e06';
-  ctx.fillRect(x - 4*s, y + 4*s, 3*s, 3*s);
-  ctx.fillRect(x + 1*s, y + 4*s, 3*s, 3*s);
-  // Sword blade
-  ctx.fillStyle = '#d0d0e0'; ctx.fillRect(x + 6*s, y - 16*s, 2*s, 13*s);
-  ctx.fillStyle = '#a0a0b8'; ctx.fillRect(x + 7*s, y - 16*s, 1*s, 13*s);
-  // Sword guard
-  ctx.fillStyle = '#c8913a'; ctx.fillRect(x + 4*s, y - 10*s, 6*s, 2*s);
-  // Sword pommel
-  ctx.fillStyle = '#8b1a1a'; ctx.fillRect(x + 6*s, y - 3*s, 2*s, 2*s);
-}
+  pl.onGround = false;
 
-// ── Enemy sprites ──────────────────────────────────────────
-
-const SPRITES = {
-  1(ex, ey, s, sway, a, boss) {
-    const x = Math.round(ex + sway), y = ey, sc = boss ? s * 1.4 : s;
-    ctx.globalAlpha = a;
-    // Skull
-    ctx.fillStyle = '#d8d0c0'; ctx.fillRect(x - 6*sc, y - 20*sc, 12*sc, 10*sc);
-    ctx.fillStyle = '#b8b0a8'; ctx.fillRect(x - 5*sc, y - 19*sc, 10*sc, 8*sc);
-    // Eye sockets
-    ctx.fillStyle = '#04020a';
-    ctx.fillRect(x - 4*sc, y - 17*sc, 3*sc, 4*sc);
-    ctx.fillRect(x + 1*sc,  y - 17*sc, 3*sc, 4*sc);
-    // Glowing soul
-    ctx.fillStyle = boss ? 'rgba(120,180,255,0.9)' : 'rgba(60,120,255,0.7)';
-    ctx.fillRect(x - 3*sc, y - 16*sc, 2*sc, 2*sc);
-    ctx.fillRect(x + 1*sc, y - 16*sc, 2*sc, 2*sc);
-    // Teeth
-    ctx.fillStyle = '#c8c0b0';
-    for (let i = 0; i < 4; i++) ctx.fillRect(x - 3*sc + i*2*sc, y - 11*sc, sc, 2*sc);
-    // Body robe
-    ctx.fillStyle = '#5a5050'; ctx.fillRect(x - 4*sc, y - 10*sc, 8*sc, 10*sc);
-    // Arms
-    ctx.fillStyle = '#787060';
-    ctx.fillRect(x - 7*sc, y - 10*sc, 3*sc, 8*sc);
-    ctx.fillRect(x + 4*sc,  y - 10*sc, 3*sc, 8*sc);
-    ctx.globalAlpha = 1;
-  },
-  2(ex, ey, s, sway, a, boss) {
-    const x = Math.round(ex + sway), y = ey, sc = boss ? s * 1.4 : s;
-    ctx.globalAlpha = a;
-    // Dark armour body
-    ctx.fillStyle = '#481818'; ctx.fillRect(x - 5*sc, y - 20*sc, 10*sc, 20*sc);
-    // Helmet
-    ctx.fillStyle = '#2e0e0e'; ctx.fillRect(x - 5*sc, y - 20*sc, 10*sc, 8*sc);
-    ctx.fillStyle = '#c82828';
-    ctx.fillRect(x - 4*sc, y - 18*sc, 8*sc, 2*sc); // red visor
-    if (boss) {
-      ctx.fillStyle = '#ff4040';
-      ctx.fillRect(x - 3*sc, y - 17*sc, 6*sc, 1*sc);
-    }
-    // Pauldrons
-    ctx.fillStyle = '#6a2828';
-    ctx.fillRect(x - 9*sc, y - 20*sc, 4*sc, 6*sc);
-    ctx.fillRect(x + 5*sc,  y - 20*sc, 4*sc, 6*sc);
-    // Sword
-    ctx.fillStyle = '#a0a0b8'; ctx.fillRect(x + 5*sc, y - 16*sc, 2*sc, 13*sc);
-    ctx.fillStyle = '#481818'; ctx.fillRect(x + 3*sc, y - 12*sc, 6*sc, 2*sc);
-    // Legs
-    ctx.fillStyle = '#2e0e0e';
-    ctx.fillRect(x - 4*sc, y, 3*sc, 5*sc);
-    ctx.fillRect(x + 1*sc,  y, 3*sc, 5*sc);
-    ctx.globalAlpha = 1;
-  },
-  3(ex, ey, s, sway, a, boss) {
-    const x = Math.round(ex + sway), y = ey, sc = boss ? s * 1.4 : s;
-    ctx.globalAlpha = a;
-    // Stone body
-    ctx.fillStyle = '#686460'; ctx.fillRect(x - 5*sc, y - 22*sc, 10*sc, 22*sc);
-    ctx.fillStyle = '#484440'; ctx.fillRect(x - 4*sc, y - 21*sc, 8*sc, 5*sc);
-    // Eyes carved
-    ctx.fillStyle = '#1a1614';
-    ctx.fillRect(x - 3*sc, y - 18*sc, 2*sc, 3*sc);
-    ctx.fillRect(x + 1*sc,  y - 18*sc, 2*sc, 3*sc);
-    ctx.fillStyle = boss ? 'rgba(255,200,50,0.9)' : 'rgba(200,160,30,0.7)';
-    ctx.fillRect(x - 2*sc, y - 17*sc, 1*sc, 1*sc);
-    ctx.fillRect(x + 1*sc, y - 17*sc, 1*sc, 1*sc);
-    // Stone arms
-    ctx.fillStyle = '#787470';
-    ctx.fillRect(x - 8*sc, y - 16*sc, 3*sc, 9*sc);
-    ctx.fillRect(x + 5*sc,  y - 16*sc, 3*sc, 9*sc);
-    // Cracks
-    ctx.strokeStyle = '#282420'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(x - sc, y - 20*sc); ctx.lineTo(x, y - 8*sc); ctx.stroke();
-    ctx.globalAlpha = 1;
-  },
-  4(ex, ey, s, sway, a, boss) {
-    const x = Math.round(ex + sway), y = ey, sc = boss ? s * 1.4 : s;
-    ctx.globalAlpha = a;
-    // Monk head
-    ctx.fillStyle = '#d8b870'; ctx.fillRect(x - 2*sc, y - 22*sc, 4*sc, 5*sc);
-    // Robe outer
-    ctx.fillStyle = '#281204'; ctx.fillRect(x - 7*sc, y - 17*sc, 14*sc, 17*sc);
-    // Robe inner
-    ctx.fillStyle = '#180c02'; ctx.fillRect(x - 5*sc, y - 15*sc, 10*sc, 15*sc);
-    // Gold sash
-    ctx.fillStyle = '#c8913a'; ctx.fillRect(x - 4*sc, y - 9*sc, 8*sc, 2*sc);
-    // Scroll held
-    ctx.fillStyle = '#e8d8a0'; ctx.fillRect(x - 5*sc, y - 14*sc, 2*sc, 7*sc);
-    ctx.fillStyle = '#c8b880';
-    ctx.fillRect(x - 5*sc, y - 14*sc, 2*sc, 1*sc);
-    ctx.fillRect(x - 5*sc, y - 8*sc,  2*sc, 1*sc);
-    if (boss) {
-      // Golden aura
-      ctx.fillStyle = 'rgba(200,145,58,0.15)';
-      ctx.beginPath();
-      ctx.arc(x, y - 10*sc, 18*sc, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.globalAlpha = 1;
-  },
-  5(ex, ey, s, sway, a, boss) {
-    const x = Math.round(ex + sway), y = ey, sc = boss ? s * 1.4 : s;
-    ctx.globalAlpha = a;
-    // Vine body
-    ctx.fillStyle = '#1a5010';
-    const pts = [0,-22, 4,-18, 7,-20, 5,-12, 9,-15, 7,-8, 9,-3, 4,1, 2,5, -2,5, -4,1, -9,-3, -7,-8, -9,-15, -5,-12, -7,-20, -4,-18];
-    ctx.beginPath();
-    ctx.moveTo(x + pts[0]*sc, y + pts[1]*sc);
-    for (let i = 2; i < pts.length; i += 2) ctx.lineTo(x + pts[i]*sc, y + pts[i+1]*sc);
-    ctx.closePath(); ctx.fill();
-    // Vine highlights
-    ctx.fillStyle = '#2a7020';
-    ctx.fillRect(x - 2*sc, y - 20*sc, 4*sc, 6*sc);
-    // Red eyes
-    ctx.fillStyle = boss ? '#ff4040' : '#c02828';
-    ctx.fillRect(x - 2*sc, y - 18*sc, 2*sc, 2*sc);
-    ctx.fillRect(x + sc, y - 18*sc, 2*sc, 2*sc);
-    // Tendrils
-    ctx.strokeStyle = '#1a5010'; ctx.lineWidth = 2*sc;
-    ctx.beginPath(); ctx.moveTo(x - 9*sc, y - 4*sc); ctx.quadraticCurveTo(x - 14*sc, y - 10*sc, x - 12*sc, y - 16*sc); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(x + 9*sc, y - 4*sc); ctx.quadraticCurveTo(x + 14*sc, y - 10*sc, x + 12*sc, y - 16*sc); ctx.stroke();
-    ctx.globalAlpha = 1;
-  },
-  6(ex, ey, s, sway, a, boss) {
-    const x = Math.round(ex + sway), y = ey, sc = boss ? s * 1.4 : s;
-    ctx.globalAlpha = a;
-    // Mech torso
-    ctx.fillStyle = '#2a3c50'; ctx.fillRect(x - 6*sc, y - 20*sc, 12*sc, 20*sc);
-    ctx.fillStyle = '#1a2c40'; ctx.fillRect(x - 5*sc, y - 19*sc, 10*sc, 7*sc);
-    // Visor
-    ctx.fillStyle = '#1a60a0'; ctx.fillRect(x - 3*sc, y - 18*sc, 6*sc, 3*sc);
-    ctx.fillStyle = boss ? '#40e0ff' : '#20b0e0';
-    ctx.fillRect(x - 2*sc, y - 17*sc, 4*sc, 1*sc);
-    // Shoulder plates
-    ctx.fillStyle = '#3a5060';
-    ctx.fillRect(x - 10*sc, y - 19*sc, 4*sc, 8*sc);
-    ctx.fillRect(x + 6*sc,  y - 19*sc, 4*sc, 8*sc);
-    // Arm cannon
-    ctx.fillStyle = '#2a3c50'; ctx.fillRect(x + 6*sc, y - 14*sc, 4*sc, 5*sc);
-    ctx.fillStyle = '#1a60a0'; ctx.fillRect(x + 9*sc, y - 13*sc, 2*sc, 3*sc);
-    // Legs
-    ctx.fillStyle = '#1a2c40';
-    ctx.fillRect(x - 4*sc, y, 3*sc, 5*sc);
-    ctx.fillRect(x + 1*sc,  y, 3*sc, 5*sc);
-    // Feet
-    ctx.fillStyle = '#0a1c30';
-    ctx.fillRect(x - 5*sc, y + 4*sc, 4*sc, 3*sc);
-    ctx.fillRect(x + 1*sc,  y + 4*sc, 4*sc, 3*sc);
-    ctx.globalAlpha = 1;
-  },
-};
-
-// ── Particles ───────────────────────────────────────────────
-
-function mkParticles(cx, cy, col) {
-  return Array.from({ length: 50 }, () => {
-    const a = Math.random() * Math.PI * 2;
-    const spd = 1.5 + Math.random() * 5;
-    return {
-      x: cx, y: cy,
-      vx: Math.cos(a) * spd, vy: Math.sin(a) * spd - 2.5,
-      r: col === 'blood' ? 180 + Math.floor(Math.random()*70) : 195 + Math.floor(Math.random()*60),
-      g: col === 'blood' ? 10  + Math.floor(Math.random()*30) : 70  + Math.floor(Math.random()*90),
-      b: col === 'blood' ? 10  : 15,
-      a: 1, sz: 2.5 + Math.random() * 4,
-    };
-  });
-}
-
-// ── Main render loop ────────────────────────────────────────
-
-function renderFrame() {
-  if (!scene) return;
-  const W = cv.width, H = cv.height;
-  const gY   = H - 22;
-  const bob  = Math.sin(scene.frame * 0.065) * 2.5;
-  const sway = Math.sin(scene.frame * 0.055) * 2;
-  scene.frame++;
-
-  // Background
-  drawBackground(scene.floor, scene.frame);
-  tickEmbers();
-
-  // Timer bar
-  const timerRatio = Math.max(0, scene.ticks / scene.maxTicks);
-  const barW = Math.floor(W * 0.28), barX = Math.floor(W * 0.63), barY = 10;
-  ctx.fillStyle = '#0a0408'; ctx.fillRect(barX, barY, barW, 10);
-  ctx.fillStyle = timerRatio > 0.35 ? '#7a2020' : '#d01818';
-  ctx.fillRect(barX, barY, Math.floor(barW * timerRatio), 10);
-  ctx.strokeStyle = '#4a1818'; ctx.lineWidth = 1; ctx.strokeRect(barX, barY, barW, 10);
-  const tsz = Math.max(6, Math.floor(W / 95));
-  ctx.fillStyle = '#905050';
-  ctx.font = `${tsz}px "Press Start 2P"`;
-  ctx.fillText('TIME', barX - 38, barY + 9);
-
-  // Round indicator (normal battles only)
-  if (!scene.isBoss) {
-    ctx.fillStyle = 'rgba(200,145,58,0.85)';
-    ctx.font = `${tsz}px "Press Start 2P"`;
-    ctx.fillText(`${scene.round + 1}/${scene.maxRounds}`, barX - 38, barY + 24);
+  if (pl.y + pl.h >= lv.groundY) {
+    pl.y = lv.groundY - pl.h;
+    pl.vy = 0;
+    pl.onGround = true;
   }
 
-  // Enemy HP pips
-  if (scene.ea > 0.05) {
-    const pipSz = 7, pipGap = 3;
-    const pipsW = scene.enemyMaxHP * (pipSz + pipGap) - pipGap;
-    const pipX  = scene.ex - Math.floor(pipsW / 2);
-    const pipY  = gY - (scene.isBoss ? 60 : 50);
-    for (let i = 0; i < scene.enemyMaxHP; i++) {
-      ctx.fillStyle = i < scene.enemyHP ? '#cc1a1a' : '#1a0808';
-      ctx.fillRect(pipX + i * (pipSz + pipGap), pipY, pipSz, pipSz);
-      ctx.strokeStyle = '#5a1a1a'; ctx.lineWidth = 1;
-      ctx.strokeRect(pipX + i * (pipSz + pipGap), pipY, pipSz, pipSz);
-    }
-  }
-
-  // Enemy lunge toward player on wrong answer
-  const ex = scene.ex + Math.round(scene.enemyShift);
-  const es = scene.isBoss ? 3.2 : 2.0;
-  SPRITES[scene.floor](ex, gY, es, Math.round(sway), scene.ea, scene.isBoss);
-
-  // Player attack slash VFX
-  if (scene.phase === 'player_atk') {
-    const prog = Math.min(1, (scene.frame - scene.phaseStart) / 18);
-    ctx.strokeStyle = `rgba(255,215,80,${(1 - prog).toFixed(2)})`;
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(scene.px + scene.playerShift + 24, gY - 42);
-    ctx.lineTo(scene.px + scene.playerShift + 60 + prog * 75, gY - 42);
-    ctx.stroke();
-    ctx.strokeStyle = `rgba(255,160,40,${(0.55 - prog * 0.55).toFixed(2)})`;
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(scene.px + scene.playerShift + 20, gY - 52);
-    ctx.lineTo(scene.px + scene.playerShift + 48 + prog * 60, gY - 32);
-    ctx.stroke();
-  }
-
-  // Particles
-  if (scene.particles && scene.particles.length) {
-    scene.particles.forEach(p => {
-      ctx.fillStyle = `rgba(${p.r},${p.g},${p.b},${p.a.toFixed(2)})`;
-      ctx.fillRect(p.x - p.sz / 2, p.y - p.sz / 2, p.sz, p.sz);
-      p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.a -= 0.022; p.sz *= 0.97;
-    });
-    scene.particles = scene.particles.filter(p => p.a > 0.02);
-  }
-
-  // Player
-  drawPlayer(scene.px, gY, 2.0, bob, scene.shk, scene.playerShift);
-
-  // Overlay text (combo, round label, result)
-  drawOverlayTexts(W, H);
-
-  rafId = requestAnimationFrame(renderFrame);
-}
-
-function drawOverlayTexts(W, H) {
-  // Combo text
-  if (scene.comboText && scene.comboText.a > 0) {
-    const ct = scene.comboText;
-    ctx.save();
-    ctx.globalAlpha = Math.min(1, ct.a);
-    ctx.font = `${Math.max(10, Math.floor(W / 55))}px "Press Start 2P"`;
-    ctx.fillStyle = '#f0c060';
-    ctx.textAlign = 'center';
-    ctx.fillText(ct.text, W / 2, ct.y);
-    ctx.textAlign = 'left';
-    ctx.restore();
-    ct.a  -= 0.025;
-    ct.y  -= 0.7;
-  }
-
-  // Round transition label
-  if (scene.roundLabel && scene.roundLabel.a > 0) {
-    const rl = scene.roundLabel;
-    ctx.save();
-    ctx.globalAlpha = Math.min(1, rl.a);
-    ctx.font = `${Math.max(12, Math.floor(W / 40))}px "Press Start 2P"`;
-    ctx.fillStyle = '#c8913a';
-    ctx.textAlign = 'center';
-    ctx.fillText(rl.text, W / 2, H / 2 - 10);
-    ctx.textAlign = 'left';
-    ctx.restore();
-    rl.a -= 0.03;
-  }
-
-  // Boss name intro
-  if (scene.bossIntro && scene.bossIntro.a > 0) {
-    const bi = scene.bossIntro;
-    const alpha = Math.min(1, bi.a);
-    ctx.save();
-    ctx.globalAlpha = alpha * 0.7;
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(0, H * 0.3, cv.width, H * 0.4);
-    ctx.globalAlpha = alpha;
-    ctx.font = `${Math.max(12, Math.floor(cv.width / 32))}px "Press Start 2P"`;
-    ctx.fillStyle = '#8b1a1a';
-    ctx.textAlign = 'center';
-    ctx.fillText(bi.name, cv.width / 2, H * 0.45);
-    ctx.font = `${Math.max(7, Math.floor(cv.width / 65))}px "Press Start 2P"`;
-    ctx.fillStyle = '#c8913a';
-    ctx.fillText(bi.title, cv.width / 2, H * 0.55);
-    ctx.textAlign = 'left';
-    ctx.restore();
-    bi.a -= 0.012;
-  }
-}
-
-// ═══════════════════════════════════════════════════════════
-// 4. AUDIO
-// ═══════════════════════════════════════════════════════════
-
-function playSound(type) {
-  try {
-    const ac = new (window.AudioContext || window.webkitAudioContext)();
-    ac.resume().then(() => {
-      switch (type) {
-        case 'sword': {
-          // Metallic sword swing
-          const o = ac.createOscillator(); const g = ac.createGain();
-          o.connect(g); g.connect(ac.destination);
-          o.type = 'sawtooth'; o.frequency.value = 600;
-          o.frequency.exponentialRampToValueAtTime(180, ac.currentTime + 0.12);
-          g.gain.value = 0.08;
-          g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.25);
-          o.start(); o.stop(ac.currentTime + 0.25);
-          break;
-        }
-        case 'hit': {
-          // Deep impact thud
-          const o = ac.createOscillator(); const g = ac.createGain();
-          o.connect(g); g.connect(ac.destination);
-          o.type = 'square'; o.frequency.value = 120;
-          o.frequency.exponentialRampToValueAtTime(40, ac.currentTime + 0.15);
-          g.gain.value = 0.12;
-          g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.3);
-          o.start(); o.stop(ac.currentTime + 0.3);
-          break;
-        }
-        case 'wrong': {
-          // Dissonant buzz
-          const o = ac.createOscillator(); const g = ac.createGain();
-          o.connect(g); g.connect(ac.destination);
-          o.type = 'sawtooth'; o.frequency.value = 200;
-          o.frequency.exponentialRampToValueAtTime(80, ac.currentTime + 0.4);
-          g.gain.value = 0.09;
-          g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.5);
-          o.start(); o.stop(ac.currentTime + 0.5);
-          break;
-        }
-        case 'victory': {
-          // Ascending triumphant tones
-          [880, 1100, 1320, 1760].forEach((f, i) => {
-            const o = ac.createOscillator(); const g = ac.createGain();
-            o.connect(g); g.connect(ac.destination);
-            o.type = 'sine'; o.frequency.value = f;
-            g.gain.setValueAtTime(0, ac.currentTime + i * 0.12);
-            g.gain.linearRampToValueAtTime(0.07, ac.currentTime + i * 0.12 + 0.05);
-            g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + i * 0.12 + 0.4);
-            o.start(ac.currentTime + i * 0.12);
-            o.stop(ac.currentTime + i * 0.12 + 0.45);
-          });
-          break;
-        }
-        case 'story': {
-          // Soft bell
-          const o = ac.createOscillator(); const g = ac.createGain();
-          o.connect(g); g.connect(ac.destination);
-          o.type = 'sine'; o.frequency.value = 660;
-          o.frequency.linearRampToValueAtTime(880, ac.currentTime + 0.1);
-          g.gain.value = 0.06;
-          g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.8);
-          o.start(); o.stop(ac.currentTime + 0.9);
-          break;
-        }
-        case 'boss_intro': {
-          // Dramatic chord
-          [80, 120, 160].forEach((f, i) => {
-            const o = ac.createOscillator(); const g = ac.createGain();
-            o.connect(g); g.connect(ac.destination);
-            o.type = 'sawtooth'; o.frequency.value = f;
-            g.gain.value = 0.06;
-            g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 1.2);
-            o.start(ac.currentTime + i * 0.05);
-            o.stop(ac.currentTime + 1.3);
-          });
-          break;
-        }
-        case 'boss_win': {
-          // Epic victory fanfare
-          [[880,0],[1100,0.15],[1320,0.30],[1760,0.45],[2200,0.60]].forEach(([f,t]) => {
-            const o = ac.createOscillator(); const g = ac.createGain();
-            o.connect(g); g.connect(ac.destination);
-            o.type = 'sine'; o.frequency.value = f;
-            g.gain.setValueAtTime(0, ac.currentTime + t);
-            g.gain.linearRampToValueAtTime(0.1, ac.currentTime + t + 0.08);
-            g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + t + 0.6);
-            o.start(ac.currentTime + t); o.stop(ac.currentTime + t + 0.7);
-          });
-          break;
-        }
-        case 'coin': {
-          const o = ac.createOscillator(); const g = ac.createGain();
-          o.connect(g); g.connect(ac.destination);
-          o.type = 'sine'; o.frequency.value = 1200;
-          o.frequency.exponentialRampToValueAtTime(1800, ac.currentTime + 0.1);
-          g.gain.value = 0.05;
-          g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.22);
-          o.start(); o.stop(ac.currentTime + 0.25);
-          break;
-        }
+  lv.platforms.forEach(function(pt) {
+    var px=pt[0], py=pt[1], pw=pt[2], ph=pt[3];
+    if (pl.x + pl.w > px && pl.x < px + pw) {
+      if (pl.vy >= 0 && pl.y + pl.h >= py && pl.y + pl.h <= py + ph + Math.abs(pl.vy) + 2) {
+        pl.y  = py - pl.h;
+        pl.vy = 0;
+        pl.onGround = true;
       }
-    });
-  } catch (_) {}
-}
-
-// ═══════════════════════════════════════════════════════════
-// 5. BATTLE LOGIC
-// ═══════════════════════════════════════════════════════════
-
-let locked = false;
-let ticker = null;
-
-function killTicker() {
-  if (ticker) { clearInterval(ticker); ticker = null; }
-}
-
-function flashScreen(correct) {
-  const el = document.getElementById('flashOverlay');
-  el.className = '';
-  void el.offsetWidth;
-  el.className = correct ? 'flash-green' : 'flash-red';
-  setTimeout(() => { el.className = ''; }, 420);
-}
-
-// ── Lunge animations ───────────────────────────────────────
-
-function animatePlayerLunge(dist, duration) {
-  let progress = 0;
-  const steps = duration / 16;
-  const id = setInterval(() => {
-    progress++;
-    if (progress < steps * 0.5) {
-      scene.playerShift = (progress / (steps * 0.5)) * dist;
-    } else {
-      scene.playerShift = ((steps - progress) / (steps * 0.5)) * dist;
     }
-    if (progress >= steps) { clearInterval(id); scene.playerShift = 0; }
-  }, 16);
+  });
+
+  if (pl.onGround) {
+    pl.coyoteTime = COYOTE_MAX;
+  } else {
+    pl.coyoteTime = Math.max(0, pl.coyoteTime - 1);
+  }
 }
 
-function animateEnemyLunge(dist, duration) {
-  let progress = 0;
-  const steps = duration / 16;
-  const id = setInterval(() => {
-    progress++;
-    if (progress < steps * 0.4) {
-      scene.enemyShift = -(progress / (steps * 0.4)) * dist;
-    } else {
-      scene.enemyShift = -((steps - progress) / (steps * 0.6)) * dist;
+/* =====================================================================
+   ENEMY AI
+   ===================================================================== */
+function updateEnemies() {
+  var lv = levels[currentFloor];
+  enemies.forEach(function(e) {
+    if (e.defeated) return;
+
+    e.x += e.dir * e.speed;
+    if (Math.abs(e.x - e.startX) > e.patrolDist) e.dir *= -1;
+
+    if (e.hurtTimer > 0) e.hurtTimer--;
+
+    if (gameMode === 'explore' && invincible === 0) {
+      var dx = Math.abs((pl.x + pl.w/2) - e.x);
+      var dy = Math.abs((pl.y + pl.h/2) - (e.y - 18));
+      if (dx < 28 && dy < 34) triggerBattle(e, false);
     }
-    if (progress >= steps) { clearInterval(id); scene.enemyShift = 0; }
-  }, 16);
+  });
+
+  // Boss
+  if (!bossDefeated && gameMode === 'explore' && invincible === 0) {
+    var boss = lv.boss;
+    var bdx  = Math.abs((pl.x + pl.w/2) - boss.x);
+    var bdy  = Math.abs((pl.y + pl.h/2) - (boss.y - 24));
+    if (bdx < 38 && bdy < 50) triggerBattle(null, true);
+  }
 }
 
-function playerShake() {
-  let shakes = 0;
-  const id = setInterval(() => {
-    if (!scene) { clearInterval(id); return; }
-    scene.shk = shakes % 2 === 0 ? 8 : -8;
-    if (++shakes > 10) { clearInterval(id); if (scene) scene.shk = 0; }
-  }, 38);
+function checkScrollPickups() {
+  scrolls.forEach(function(s, i) {
+    if (s.collected) return;
+    var dx = Math.abs((pl.x + pl.w/2) - s.x);
+    var dy = Math.abs((pl.y + pl.h/2) - s.y);
+    if (dx < 26 && dy < 26) {
+      s.collected = true;
+      playSound('pickup');
+      spawnParticles(s.x - cam.x, s.y, '#ffd700', 12);
+      triggerFill(FILLS[currentFloor][s.fi]);
+      saveGame();
+    }
+  });
 }
 
-// ── Start battle ───────────────────────────────────────────
+function checkExit() {
+  if (!bossDefeated) return;
+  var ex = levels[currentFloor].exit;
+  var dx = Math.abs((pl.x + pl.w/2) - ex.x);
+  var dy = Math.abs((pl.y + pl.h/2) - ex.y);
+  if (dx < 32 && dy < 32) showLevelWin();
+}
 
-function startBattle(floor, isBoss) {
-  killTicker();
-  locked = false;
+/* =====================================================================
+   BATTLE
+   ===================================================================== */
+function triggerBattle(enemy, isBoss) {
+  if (gameMode !== 'explore') return;
+  gameMode      = 'battle';
+  battleEnemy   = enemy;
+  battleIsBoss  = isBoss;
 
-  const areaW = document.getElementById('gameArea').getBoundingClientRect().width || 560;
-  const H = isBoss ? 220 : 190;
-  startCanvas(Math.floor(areaW - 4), H);
+  var pool = DB[currentFloor].questions.slice();
+  battleQueue   = [];
+  battleRound   = 0;
+  battleCorrect = 0;
+  battlePhase   = 'question';
+  pl.vx = 0; pl.vy = 0;
 
-  const da = document.getElementById('dynArea');
-  da.innerHTML = '';
-  da.appendChild(cv);
+  // Pick 3 random questions
+  for (var i=0; i<3 && pool.length; i++) {
+    var idx = Math.floor(Math.random()*pool.length);
+    battleQueue.push(pool.splice(idx,1)[0]);
+  }
 
-  // Select questions
-  const qi = G.rooms[floor].qi;
-  const pool = DB[floor].qs;
-  const questions = isBoss
-    ? [DB[floor].boss]
-    : [
-        pool[qi % pool.length],
-        pool[(qi + 1) % pool.length],
-        pool[(qi + 2) % pool.length],
-      ];
-
-  scene = {
-    floor, isBoss,
-    px: Math.floor(areaW * 0.15),
-    ex: Math.floor(areaW * 0.71),
-    exBase: Math.floor(areaW * 0.71),
-    ea: 1,
-    shk: 0,
-    playerShift: 0,
-    enemyShift: 0,
-
-    questions,
-    round: 0,
-    maxRounds: questions.length,
-    enemyHP: isBoss ? 1 : 3,
-    enemyMaxHP: isBoss ? 1 : 3,
-    correctCount: 0,
-
-    phase: 'idle',
-    phaseStart: 0,
-
-    comboText: null,
-    roundLabel: null,
-    bossIntro: isBoss ? { name: DB[floor].bossName, title: DB[floor].bossTitle, a: 2.5 } : null,
-
-    ticks: isBoss ? 250 : 220,
-    maxTicks: isBoss ? 250 : 220,
-
-    particles: [],
-    embers: mkEmbers(),
-    frame: 0,
-  };
-
-  if (rafId) cancelAnimationFrame(rafId);
-  rafId = requestAnimationFrame(renderFrame);
-
-  // DOM skeleton
-  const qDiv = document.createElement('div');
-  qDiv.id = 'questionText';
-  da.appendChild(qDiv);
-
-  const og = document.createElement('div');
-  og.id = 'optGrid';
-  da.appendChild(og);
-
-  const fbDiv = document.createElement('div');
-  fbDiv.id = 'feedbackText';
-  da.appendChild(fbDiv);
+  cv.height = BATTLE_H;
+  document.getElementById('battleUI').hidden = false;
 
   if (isBoss) {
     playSound('boss_intro');
-    // Delay showing question during boss intro
-    setTimeout(() => showRoundQuestion(0), 2400);
+    showBossIntro(DB[currentFloor].bossName, DB[currentFloor].bossTitle, function() { showRoundQ(); });
   } else {
-    showRoundQuestion(0);
+    playSound('sword');
+    showRoundQ();
   }
 }
 
-// ── Show a specific round's question ──────────────────────
+function showRoundQ() {
+  if (battleRound >= battleQueue.length) { endBattle(); return; }
+  battlePhase = 'question';
+  var q = battleQueue[battleRound];
+  var labels = ['A','B','C','D'];
 
-function showRoundQuestion(round) {
-  if (!scene) return;
-  scene.round = round;
-  const qObj = scene.questions[round];
+  document.getElementById('notify').innerHTML =
+    '\u{2694} 第' + (battleRound+1) + '/3 题 &nbsp;·&nbsp; 连击 ' + streakVal + '\xd7';
 
-  const qDiv = document.getElementById('questionText');
-  if (qDiv) qDiv.textContent = qObj.q;
+  document.getElementById('dynArea').innerHTML =
+    '<div class="battle-q">' + q.q + '</div>' +
+    '<div class="battle-opts" id="optGrid">' +
+      q.opts.map(function(opt,i) {
+        return '<button class="opt-btn" data-idx="' + i + '">' + labels[i] + '. ' + opt + '</button>';
+      }).join('') +
+    '</div>' +
+    '<div class="battle-timer"><div class="timer-bar" id="timerBar" style="width:100%"></div></div>';
 
-  const fbEl = document.getElementById('feedbackText');
-  if (fbEl) fbEl.textContent = '';
-
-  const og = document.getElementById('optGrid');
-  if (og) {
-    og.innerHTML = '';
-    qObj.opts.forEach((opt, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'opt-btn';
-      btn.textContent = opt;
-      btn.addEventListener('click', () => onAnswer(i, qObj));
-      og.appendChild(btn);
+  document.querySelectorAll('.opt-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (battlePhase !== 'question') return;
+      onAnswer(parseInt(btn.dataset.idx), q);
     });
-  }
+  });
 
-  // Reset timer
-  killTicker();
-  scene.ticks = scene.maxTicks;
-  ticker = setInterval(() => {
-    if (!scene) { killTicker(); return; }
-    scene.ticks = Math.max(0, scene.ticks - 1);
-    if (scene.ticks === 0) { killTicker(); if (locked) onAnswer(-1, qObj); }
-  }, 100);
-
-  locked = true;
+  startTimer(q);
 }
 
-// ── Process an answer ─────────────────────────────────────
+function startTimer(q) {
+  var timerVal = 100;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(function() {
+    timerVal -= 2.5;
+    var bar = document.getElementById('timerBar');
+    if (bar) bar.style.width = timerVal + '%';
+    if (timerVal <= 0) {
+      clearInterval(timerInterval);
+      onAnswer(-1, q);
+    }
+  }, 120);
+}
 
 function onAnswer(selectedIdx, qObj) {
-  if (!locked) return;
-  killTicker();
-  locked = false;
+  if (battlePhase !== 'question') return;
+  battlePhase = 'result';
+  clearInterval(timerInterval);
 
-  const correct = selectedIdx === qObj.ok;
-  flashScreen(correct);
+  var correct = selectedIdx === qObj.ans;
 
-  // Disable buttons + highlight
-  document.querySelectorAll('.opt-btn').forEach((btn, i) => {
+  document.querySelectorAll('.opt-btn').forEach(function(btn, i) {
     btn.disabled = true;
-    if (i === qObj.ok)         btn.classList.add('correct');
-    else if (i === selectedIdx) btn.classList.add('wrong');
+    if (i === qObj.ans) btn.classList.add('correct');
+    if (i === selectedIdx && !correct) btn.classList.add('wrong');
   });
-
-  const fbEl = document.getElementById('feedbackText');
-  if (fbEl) {
-    fbEl.textContent = correct
-      ? `✓ ${qObj.ex}`
-      : `✗ 正确答案：${qObj.opts[qObj.ok]} — ${qObj.ex}`;
-  }
 
   if (correct) {
-    G.streak = (G.streak || 0) + 1;
-    const bonus = G.streak >= 3 ? 10 : G.streak >= 2 ? 5 : 0;
-    const xpGain = (scene.isBoss ? 60 : 20) + bonus;
-    G.xp = Math.min(600, G.xp + xpGain);
-    saveGame(); updateHUD();
-
-    playSound('sword');
-    setTimeout(() => playSound('hit'), 180);
-
-    // Player lunges right
-    scene.phase = 'player_atk';
-    scene.phaseStart = scene.frame;
-    animatePlayerLunge(50, 380);
-
-    // Blood particles on impact
-    setTimeout(() => {
-      if (scene) {
-        scene.particles.push(...mkParticles(scene.ex - 20, cv.height - 55, 'blood'));
-        scene.enemyHP = Math.max(0, scene.enemyHP - 1);
-      }
-    }, 220);
-
-    // Combo text
-    if (G.streak >= 3) {
-      scene.comboText = { text: `連 ${G.streak}×！`, a: 2.2, y: cv.height * 0.45 };
-    } else if (G.streak === 2) {
-      scene.comboText = { text: '连击！', a: 2.0, y: cv.height * 0.45 };
-    }
-
-    const notify = bonus > 0
-      ? `⚔ 击中! +${xpGain} XP (连击+${bonus})`
-      : `⚔ 击中! +${xpGain} XP`;
-    setNotify(notify);
-
-    // After animation: check result
-    setTimeout(() => {
-      if (!scene) return;
-
-      if (scene.enemyHP === 0) {
-        // Enemy defeated
-        scene.phase = 'die';
-        scene.particles.push(...mkParticles(scene.ex, cv.height - 55, 'gold'));
-        let fadeSteps = 0;
-        const fadeId = setInterval(() => {
-          if (!scene) { clearInterval(fadeId); return; }
-          if (++fadeSteps > 12) { scene.ea = 0; clearInterval(fadeId); }
-          else scene.ea = Math.max(0, 1 - fadeSteps / 12);
-        }, 40);
-
-        if (scene.isBoss) {
-          playSound('boss_win');
-          locked = true;
-          setTimeout(() => { locked = false; finishBossWin(scene.floor); }, 1100);
-        } else {
-          playSound('victory');
-          G.rooms[scene.floor].battle = true;
-          G.rooms[scene.floor].qi = (G.rooms[scene.floor].qi + scene.maxRounds) % DB[scene.floor].qs.length;
-          saveGame(); updateHUD();
-          setNotify(`🏆 敌人已倒下！ (${scene.correctCount + 1}/${scene.maxRounds} 击中)`);
-          setTimeout(() => { stopCanvas(); showIdle(); renderRooms(); }, 1100);
-        }
-      } else if (!scene.isBoss) {
-        scene.correctCount++;
-        // Advance to next round
-        setTimeout(() => advanceRound(), 200);
-      }
-    }, 900);
-
+    battleCorrect++;
+    streakVal++;
+    playerXP += 10 + Math.min(streakVal, 5)*2;
+    playSound('correct');
+    spawnParticles(W/2, BATTLE_H/2, '#40ff80', 8);
+    document.getElementById('notify').innerHTML =
+      '<span style="color:#40ff80">✓ 正确！</span> ' + qObj.note;
+    if (battleEnemy) battleEnemy.hp = Math.max(0, battleEnemy.hp-1);
   } else {
-    // Wrong answer
-    G.streak = 0;
-    const hpLoss = scene.isBoss ? 25 : 15;
-    G.hp = Math.max(0, G.hp - hpLoss);
-    saveGame(); updateHUD();
-
+    streakVal = 0;
+    playerHP  = Math.max(0, playerHP - 15);
+    invincible = 60;
     playSound('wrong');
-    playerShake();
-
-    // Enemy lunges toward player
-    animateEnemyLunge(65, 480);
-    setTimeout(() => {
-      if (scene) scene.particles.push(...mkParticles(scene.px + 30, cv.height - 45, 'blood'));
-    }, 240);
-
-    setNotify(`✗ -${hpLoss} HP`);
-
-    setTimeout(() => {
-      if (G.hp <= 0) { showDeathScreen(); return; }
-
-      if (scene.isBoss) {
-        // Boss: retry same question
-        showRoundQuestion(0);
-      } else {
-        advanceRound();
-      }
-    }, 1100);
+    spawnParticles(W/2, BATTLE_H/2, '#ff4040', 8);
+    document.getElementById('notify').innerHTML =
+      '<span style="color:#ff4040">✗ 错了…</span> ' + qObj.note;
   }
+
+  updateHUD();
+  renderBattleCanvas();
+
+  setTimeout(function() {
+    battleRound++;
+    if (battleRound < battleQueue.length) showRoundQ();
+    else endBattle();
+  }, 1900);
 }
 
-// ── Advance to next round ─────────────────────────────────
+function endBattle() {
+  clearInterval(timerInterval);
+  var won = battleCorrect >= 2;
 
-function advanceRound() {
-  if (!scene) return;
-  const nextRound = scene.round + 1;
-
-  if (nextRound >= scene.maxRounds) {
-    // Battle over — tally result
-    const hits = scene.correctCount + (scene.enemyHP === 0 ? 1 : 0);
-
-    if (hits >= 2) {
-      // Victory (2/3 or 3/3 correct)
-      G.rooms[scene.floor].battle = true;
-      playSound('victory');
-      setNotify(`⚔ 战斗胜利！${hits}/${scene.maxRounds} 命中`);
+  if (won) {
+    playSound('victory');
+    if (battleEnemy) {
+      battleEnemy.defeated = true;
+      spawnParticles(battleEnemy.x - cam.x, battleEnemy.y - 20, PAL[currentFloor+1].torch, 18);
     } else {
-      // Retreat (0/3 or 1/3)
-      setNotify(`✗ 败退…再来一次！${hits}/${scene.maxRounds} 命中`);
+      bossDefeated = true;
+      playSound('boss_win');
+      spawnParticles(levels[currentFloor].boss.x - cam.x, levels[currentFloor].boss.y - 30, '#ffd700', 28);
+      if (typeof confetti === 'function') confetti({particleCount:80,spread:70,origin:{y:0.5}});
     }
-
-    G.rooms[scene.floor].qi = (G.rooms[scene.floor].qi + scene.maxRounds) % DB[scene.floor].qs.length;
-    saveGame(); updateHUD();
-
-    setTimeout(() => { stopCanvas(); showIdle(); renderRooms(); }, 900);
-
+    playerXP += 30;
+    document.getElementById('notify').innerHTML =
+      '<span style="color:#ffd700">\u{1F3C6} 胜利！ ' + battleCorrect + '/3 题正确</span>';
   } else {
-    // Show "next round" label then show next question
-    scene.roundLabel = { text: `第 ${nextRound + 1} 轮`, a: 2.5 };
-    setTimeout(() => showRoundQuestion(nextRound), 600);
-  }
-}
-
-// ── Boss win ───────────────────────────────────────────────
-
-function finishBossWin(floor) {
-  stopCanvas();
-  G.rooms[floor].boss = true;
-  G.cleared[floor]    = true;
-  if (floor < 6) G.floor = floor + 1;
-  saveGame(); updateHUD();
-
-  if (typeof confetti !== 'undefined') {
-    confetti({ particleCount: 250, spread: 140, origin: { y: 0.5 },
-      colors: ['#f0c060','#c8913a','#8b1a1a','#e8dcc8','#ffffff'] });
+    if (battleEnemy) battleEnemy.hp = 3;
+    playerHP = Math.max(10, playerHP - 20);
+    document.getElementById('notify').innerHTML =
+      '<span style="color:#ff8888">失败… ' + battleCorrect + '/3 题正确</span>';
   }
 
-  const msg = floor < 6
-    ? `🎉 第${floor}层解放！通往第${floor + 1}层！`
-    : '🏆 全部通关！六层罪孽地下城已征服！';
-  setNotify(msg);
-
-  setTimeout(() => { showIdle(); syncUI(); }, 1100);
-}
-
-// ── Story room ─────────────────────────────────────────────
-
-function startStory(floor, sObj) {
-  killTicker();
-  locked = true;
-  stopCanvas();
-  playSound('story');
-
-  const da = document.getElementById('dynArea');
-  da.innerHTML = '';
-
-  const wrap = document.createElement('div');
-  wrap.className = 'story-wrap';
-
-  const hdr = document.createElement('div');
-  hdr.className = 'story-header';
-  hdr.textContent = '◈ 典籍回廊 ◈';
-  wrap.appendChild(hdr);
-
-  const quote = document.createElement('div');
-  quote.className = 'story-quote';
-
-  const pyDiv = document.createElement('div');
-  pyDiv.className = 'story-pinyin';
-
-  const exDiv = document.createElement('div');
-  exDiv.className = 'story-explain';
-
-  const btn = document.createElement('button');
-  btn.id = 'claimBtn';
-  btn.textContent = '◈ 领取智慧 (+10 XP)';
-  btn.style.display = 'none';
-
-  btn.addEventListener('click', () => {
-    if (!locked) return;
-    G.xp = Math.min(600, G.xp + 10);
-    G.rooms[floor].story = true;
-    locked = false;
-    playSound('coin');
-    saveGame(); updateHUD();
-    setNotify('✨ 智慧之光 +10 XP');
-    setTimeout(() => { showIdle(); renderRooms(); }, 400);
-  });
-
-  wrap.appendChild(quote);
-  wrap.appendChild(pyDiv);
-  wrap.appendChild(exDiv);
-  wrap.appendChild(btn);
-  da.appendChild(wrap);
-
-  // Typewriter effect
-  const fullText = sObj.text;
-  let i = 0;
-  quote.textContent = '';
-
-  const cursor = document.createElement('span');
-  cursor.className = 'tw-cursor';
-  cursor.textContent = '▌';
-  quote.appendChild(cursor);
-
-  const typeId = setInterval(() => {
-    if (i < fullText.length) {
-      quote.insertBefore(document.createTextNode(fullText[i]), cursor);
-      i++;
-    } else {
-      clearInterval(typeId);
-      cursor.remove();
-
-      // Reveal pinyin + explanation after typing done
-      setTimeout(() => {
-        pyDiv.textContent = sObj.py || '';
-        setTimeout(() => {
-          exDiv.textContent = `📖 ${sObj.ex}`;
-          setTimeout(() => {
-            btn.style.display = '';
-          }, 300);
-        }, 200);
-      }, 300);
-    }
-  }, 60);
-}
-
-// ── Death screen ───────────────────────────────────────────
-
-function showDeathScreen() {
-  stopCanvas(); killTicker(); locked = false;
-  document.getElementById('deathMsg').textContent = `当前经验值: ${G.xp} XP · 连击: ${G.streak || 0}`;
-  document.getElementById('deathScreen').classList.add('visible');
-}
-
-function handleDeath() {
-  document.getElementById('deathScreen').classList.remove('visible');
-  if (G.floor > 1) {
-    G.floor--;
-    const qi = G.rooms[G.floor]?.qi ?? 0;
-    G.rooms[G.floor] = { battle: false, story: false, boss: false, qi };
-    G.cleared[G.floor] = false;
-  } else {
-    G.rooms[1] = { battle: false, story: false, boss: false, qi: 0 };
-  }
-  G.hp = 70;
+  updateHUD();
   saveGame();
-  setNotify('⚰ 灵魂庇护所 — 重整旗鼓');
-  showIdle(); syncUI();
-}
 
-// ═══════════════════════════════════════════════════════════
-// 6. UI RENDERING
-// ═══════════════════════════════════════════════════════════
-
-function setNotify(msg) { document.getElementById('notify').textContent = msg; }
-
-function showIdle() {
-  stopCanvas();
-  const da = document.getElementById('dynArea');
-  da.innerHTML = '';
-  const screen = document.createElement('div');
-  screen.id = 'idleScreen';
-  const h2 = document.createElement('h2');
-  h2.textContent = '选择一个房间开始';
-  const p = document.createElement('p');
-  p.textContent = '完成战斗之间与剧情回廊，解锁领主挑战';
-  screen.appendChild(h2); screen.appendChild(p);
-  da.appendChild(screen);
-}
-
-function updateHUD() {
-  document.getElementById('hpFill').style.width  = `${G.hp}%`;
-  document.getElementById('hpNum').textContent   = G.hp;
-  document.getElementById('xpFill').style.width  = `${Math.min(100, G.xp / 6)}%`;
-  document.getElementById('xpNum').textContent   = G.xp;
-  document.getElementById('flNum').textContent   = G.floor;
-
-  const streakEl = document.getElementById('streakNum');
-  if (streakEl) {
-    streakEl.textContent = G.streak || 0;
-    streakEl.parentElement.style.display = G.streak >= 2 ? '' : 'none';
-  }
-}
-
-function renderFloorMap() {
-  const list = document.getElementById('fnList');
-  list.innerHTML = '';
-  for (let i = 1; i <= 6; i++) {
-    const unlocked  = i === 1 || !!G.cleared[i - 1];
-    const isCurrent = i === G.floor;
-    const isDone    = !!G.cleared[i];
-
-    const node = document.createElement('div');
-    node.className = ['floor-node', unlocked ? 'open' : '', isCurrent ? 'cur' : '', isDone ? 'clr' : ''].filter(Boolean).join(' ');
-    node.innerHTML = `<div>第${i}层</div><div class="floor-node-sub">${DB[i].name}</div>`;
-
-    if (unlocked) {
-      node.addEventListener('click', () => {
-        if (i !== G.floor) {
-          G.floor = i; saveGame();
-          setNotify(`进入第${i}层 · ${DB[i].name}`);
-          showIdle(); syncUI();
-        }
-      });
+  setTimeout(function() {
+    if (playerHP <= 0) {
+      showDeathScreen();
+    } else {
+      exitBattle();
     }
-    list.appendChild(node);
+  }, 1600);
+}
+
+function exitBattle() {
+  gameMode = 'explore';
+  document.getElementById('battleUI').hidden = true;
+  cv.height  = EXPLORE_H;
+  invincible = 120;
+  pl.vx = 0;
+  updateHUD();
+}
+
+/* =====================================================================
+   FILL CHALLENGE
+   ===================================================================== */
+function triggerFill(data) {
+  gameMode   = 'fill';
+  fillData   = data;
+  fillResult = null;
+
+  cv.height = BATTLE_H;
+  document.getElementById('battleUI').hidden = false;
+
+  document.getElementById('notify').textContent = '\u{1F4DC} 填空挑战 — 拣到一卷古书！';
+  document.getElementById('dynArea').innerHTML =
+    '<div class="battle-q">' + data.q + '</div>' +
+    '<div style="margin:12px 0;text-align:center">' +
+      '<input id="fillInput" class="fill-input" type="text" maxlength="8" placeholder="在此填写答案" autocomplete="off">' +
+      '<button class="opt-btn" id="fillSubmit" style="margin-left:8px">确认</button>' +
+    '</div>' +
+    '<div style="color:#aaa;font-size:11px;text-align:center">提示: ' + data.hint + '</div>';
+
+  var input  = document.getElementById('fillInput');
+  var submit = document.getElementById('fillSubmit');
+  input.focus();
+
+  function doSubmit() {
+    if (fillResult) return;
+    var ans     = input.value.trim();
+    var correct = ans === data.ans;
+    fillResult  = correct ? 'correct' : 'wrong';
+    submit.disabled = true;
+    input.style.color = correct ? '#40ff80' : '#ff4040';
+
+    if (correct) {
+      playSound('correct');
+      playerXP += 15;
+      streakVal++;
+      document.getElementById('notify').innerHTML = '<span style="color:#40ff80">✓ 正确！+15 XP</span>';
+    } else {
+      playSound('wrong');
+      streakVal = 0;
+      playerHP  = Math.max(0, playerHP - 8);
+      document.getElementById('notify').innerHTML =
+        '<span style="color:#ff4040">✗ 正确答案: ' + data.ans + '</span>';
+    }
+    updateHUD();
+    saveGame();
+
+    setTimeout(function() {
+      gameMode = 'explore';
+      document.getElementById('battleUI').hidden = true;
+      cv.height = EXPLORE_H;
+    }, 1700);
+  }
+
+  submit.addEventListener('click', doSubmit);
+  input.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSubmit(); });
+}
+
+/* =====================================================================
+   BOSS INTRO
+   ===================================================================== */
+function showBossIntro(name, title, cb) {
+  document.getElementById('notify').textContent = '⚠ 领主现身！';
+  document.getElementById('dynArea').innerHTML =
+    '<div style="text-align:center;padding:20px">' +
+    '<div style="font-size:20px;color:#ff4040;font-family:\'Press Start 2P\',monospace;margin-bottom:8px">' + name + '</div>' +
+    '<div style="font-size:13px;color:#ffd700;margin-bottom:14px">' + title + '</div>' +
+    '<div style="font-size:11px;color:#aaa">准备迎战… 回筍3题击败3题即胜！</div>' +
+    '</div>';
+  setTimeout(cb, 2000);
+}
+
+/* =====================================================================
+   BATTLE CANVAS
+   ===================================================================== */
+function renderBattleCanvas() {
+  var p = PAL[currentFloor+1];
+  ctx.fillStyle = p.wall;
+  ctx.fillRect(0, 0, W, BATTLE_H);
+
+  ctx.fillStyle = p.plat;
+  ctx.fillRect(0, BATTLE_H-20, W, 20);
+  ctx.fillStyle = 'rgba(255,255,255,0.07)';
+  ctx.fillRect(0, BATTLE_H-20, W, 2);
+
+  drawPlayer(120, BATTLE_H-52, 1, 'idle', 0, pl.hurtTimer);
+
+  if (battleEnemy && !battleEnemy.defeated) {
+    ctx.save();
+    ctx.translate(W - 200, 0);
+    drawEnemy({x:160, y:BATTLE_H-4, w:28, h:36, id:battleEnemy.id,
+               hp:battleEnemy.hp, hurtTimer:battleEnemy.hurtTimer, defeated:false}, 0);
+    ctx.restore();
+  } else if (battleIsBoss && !bossDefeated) {
+    var p2 = PAL[currentFloor+1];
+    ctx.save();
+    ctx.shadowColor = p2.torch;
+    ctx.shadowBlur  = 16;
+    ctx.font = '40px serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('\u{1F479}', W-130, BATTLE_H-28);
+    ctx.shadowBlur = 0;
+    ctx.restore();
+  }
+
+  ctx.fillStyle = 'rgba(255,255,255,0.07)';
+  ctx.font = 'bold 28px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('VS', W/2, BATTLE_H/2+10);
+
+  drawParticles(0);
+}
+
+/* =====================================================================
+   DEATH SCREEN
+   ===================================================================== */
+function showDeathScreen() {
+  gameMode = 'dead';
+  playSound('die');
+  document.getElementById('deathMsg').textContent =
+    '你在第 ' + (currentFloor+1) + ' 层倒下了。XP: ' + playerXP;
+  document.getElementById('deathScreen').hidden = false;
+  document.getElementById('continueBtn').onclick = function() {
+    document.getElementById('deathScreen').hidden = true;
+    playerHP   = 60;
+    streakVal  = 0;
+    invincible = 120;
+    exitBattle();
+    updateHUD();
+  };
+}
+
+/* =====================================================================
+   LEVEL WIN
+   ===================================================================== */
+function showLevelWin() {
+  if (gameMode === 'levelwin') return;
+  gameMode = 'levelwin';
+  playSound('exit');
+  cv.height = EXPLORE_H;
+  document.getElementById('battleUI').hidden = true;
+
+  var el = document.getElementById('levelWinScreen');
+  document.getElementById('lwTitle').textContent =
+    '第 ' + (currentFloor+1) + ' 层 · ' + DB[currentFloor].name + ' — 通关！';
+  document.getElementById('lwMsg').textContent =
+    'XP: ' + playerXP + ' · 连击: ' + streakVal + '\xd7';
+  el.hidden = false;
+
+  if (typeof confetti === 'function') confetti({particleCount:100,spread:80,origin:{y:0.4}});
+
+  document.getElementById('nextLevelBtn').textContent = '前往下一层 ▶';
+  document.getElementById('nextLevelBtn').onclick = function() {
+    el.hidden = true;
+    if (currentFloor >= 5) {
+      showGameComplete();
+    } else {
+      playerHP = Math.min(100, playerHP + 30);
+      saveGame();
+      initLevel(currentFloor + 1);
+      updateHUD();
+    }
+  };
+}
+
+function showGameComplete() {
+  gameMode = 'gamecomplete';
+  var el = document.getElementById('levelWinScreen');
+  document.getElementById('lwTitle').textContent = '\u{1F3C6} 恭喜通关！罪孽地下城已被征服！';
+  document.getElementById('lwMsg').textContent   = '最终得分: ' + playerXP + ' XP';
+  document.getElementById('nextLevelBtn').textContent = '再次挑战';
+  el.hidden = false;
+  if (typeof confetti === 'function') confetti({particleCount:200,spread:120});
+  document.getElementById('nextLevelBtn').onclick = function() {
+    playerHP  = 100;
+    playerXP  = 0;
+    streakVal = 0;
+    localStorage.removeItem(SAVE_KEY);
+    el.hidden = true;
+    initLevel(0);
+    updateHUD();
+  };
+}
+
+/* =====================================================================
+   CAMERA
+   ===================================================================== */
+function updateCamera() {
+  var lv  = levels[currentFloor];
+  var tgt = pl.x - W/2 + pl.w/2;
+  cam.x  += (tgt - cam.x) * 0.12;
+  cam.x   = Math.max(0, Math.min(lv.width - W, cam.x));
+}
+
+/* =====================================================================
+   INPUT
+   ===================================================================== */
+function handleInput() {
+  if (gameMode !== 'explore') return;
+
+  var left  = keys['ArrowLeft']  || keys['KeyA'] || touchLeft;
+  var right = keys['ArrowRight'] || keys['KeyD'] || !touchLeft && keys['KeyD'];
+  // re-check with touch
+  left  = left  || touchLeft;
+  right = right || (keys['ArrowRight'] || keys['KeyD'] || false);
+
+  if (touchLeft)  { left = true; right = false; }
+  if (keys['ArrowRight'] || keys['KeyD']) right = true;
+  if (keys['ArrowLeft']  || keys['KeyA']) left  = true;
+
+  if (left)       { pl.vx = -SPEED; pl.facing = -1; }
+  else if (right) { pl.vx =  SPEED; pl.facing =  1; }
+  else            { pl.vx *= 0.7; }
+
+  if (jumpPressed && pl.coyoteTime > 0) {
+    pl.vy = JUMP_FORCE;
+    pl.coyoteTime = 0;
+    playSound('jump');
+  }
+  jumpPressed = false;
+
+  if (!pl.onGround)               pl.state = 'jump';
+  else if (Math.abs(pl.vx) > 0.3) pl.state = 'run';
+  else                             pl.state = 'idle';
+
+  if (pl.hurtTimer > 0) pl.hurtTimer--;
+  if (invincible > 0)   invincible--;
+
+  pl.frameTimer++;
+  if (pl.frameTimer > 8) { pl.frame++; pl.frameTimer = 0; }
+}
+
+/* =====================================================================
+   MAIN LOOP
+   ===================================================================== */
+function gameLoop() {
+  frameCount++;
+  raf = requestAnimationFrame(gameLoop);
+
+  if (gameMode === 'explore') {
+    handleInput();
+    applyPhysics();
+    updateEnemies();
+    checkScrollPickups();
+    checkExit();
+    updateCamera();
+    tickParticles();
+    tickEmbers();
+
+    drawBackground(cam.x);
+    drawEmbers(cam.x);
+
+    var lv = levels[currentFloor];
+    scrolls.forEach(function(s) { drawScrollSprite(s, cam.x); });
+    enemies.forEach(function(e) { drawEnemy(e, cam.x); });
+    drawBoss(lv, cam.x);
+    drawExit(lv, cam.x);
+    drawPlayer(pl.x - cam.x, pl.y, pl.facing, pl.state, pl.frame, pl.hurtTimer);
+    drawParticles(cam.x);
+
+    // Scanlines
+    ctx.fillStyle = 'rgba(0,0,0,0.10)';
+    for (var y=0; y<EXPLORE_H; y+=2) ctx.fillRect(0,y,W,1);
+
+  } else if (gameMode === 'battle' || gameMode === 'fill') {
+    renderBattleCanvas();
   }
 }
 
-function renderRooms() {
-  const f = G.floor;
-  const r = G.rooms[f];
-  const bossUnlocked = r.battle && r.story;
-  const bossDone     = r.boss;
+/* =====================================================================
+   TOUCH
+   ===================================================================== */
+function initTouch() {
+  var btnL = document.getElementById('btnLeft');
+  var btnR = document.getElementById('btnRight');
+  var btnJ = document.getElementById('btnJump');
 
-  const bossMsg = document.getElementById('bossMsg');
-  bossMsg.classList.toggle('visible', bossUnlocked && !bossDone);
+  function held(btn, onDown, onUp) {
+    btn.addEventListener('touchstart',  function(e){e.preventDefault();onDown();},{passive:false});
+    btn.addEventListener('touchend',    function(e){e.preventDefault();onUp();},  {passive:false});
+    btn.addEventListener('touchcancel', function(e){e.preventDefault();onUp();},  {passive:false});
+    btn.addEventListener('mousedown',   onDown);
+    btn.addEventListener('mouseup',     onUp);
+    btn.addEventListener('mouseleave',  onUp);
+  }
 
-  const defs = [
-    {
-      type: 'battle', icon: '⚔', title: '战斗之间',
-      sub:    `3轮问答 · ${DB[f].name}`,
-      status: r.battle ? '✓ 已征服' : '词汇考验',
-      done: r.battle, locked: false,
-    },
-    {
-      type: 'story', icon: '📜', title: '剧情回廊',
-      sub:    '阅读经典名句',
-      status: r.story  ? '✓ 已征服' : '阅读典籍',
-      done: r.story, locked: false,
-    },
-    {
-      type: 'boss', icon: '👑', title: '领主之间',
-      sub:    bossUnlocked ? DB[f].bossName : '先完成前两间',
-      status: bossDone ? '✓ 已征服' : (bossUnlocked ? '可挑战!' : '🔒'),
-      done: bossDone, locked: !bossUnlocked && !bossDone,
-    },
-  ];
-
-  const grid = document.getElementById('roomGrid');
-  grid.innerHTML = '';
-
-  defs.forEach(def => {
-    const card = document.createElement('div');
-    card.className = ['room-card', def.locked ? 'locked' : '', def.done ? 'done' : ''].filter(Boolean).join(' ');
-    card.setAttribute('role', 'listitem');
-    card.innerHTML = `
-      <span class="icon">${def.icon}</span>
-      <div class="title">${def.title}</div>
-      <div class="room-sub">${def.sub}</div>
-      <div class="status">${def.status}</div>`;
-
-    card.addEventListener('click', () => {
-      if (def.locked) { setNotify('先完成战斗之间与剧情回廊！'); return; }
-      if (def.done)   { setNotify(`此房间已征服 ✓`);              return; }
-      setNotify('');
-
-      if (def.type === 'battle') {
-        startBattle(f, false);
-      } else if (def.type === 'story') {
-        const si = Math.floor(Math.random() * DB[f].storys.length);
-        startStory(f, DB[f].storys[si]);
-      } else {
-        startBattle(f, true);
-      }
-    });
-    grid.appendChild(card);
-  });
+  held(btnL, function(){touchLeft=true;},  function(){touchLeft=false;});
+  held(btnR, function(){keys['ArrowRight']=true;}, function(){keys['ArrowRight']=false;});
+  btnJ.addEventListener('touchstart', function(e){e.preventDefault();jumpPressed=true;},{passive:false});
+  btnJ.addEventListener('mousedown',  function(){jumpPressed=true;});
 }
 
-function syncUI() { updateHUD(); renderFloorMap(); renderRooms(); }
-
-// ═══════════════════════════════════════════════════════════
-// 7. SETTINGS
-// ═══════════════════════════════════════════════════════════
-
+/* =====================================================================
+   SETTINGS
+   ===================================================================== */
 function initSettings() {
-  const toggle   = document.getElementById('settingsToggle');
-  const panel    = document.getElementById('settingsPanel');
-  const resetBtn = document.getElementById('resetBtn');
-  const confirm  = document.getElementById('resetConfirm');
-  const yes      = document.getElementById('resetYes');
-  const no       = document.getElementById('resetNo');
-  const contBtn  = document.getElementById('continueBtn');
+  var tog = document.getElementById('settingsToggle');
+  var pan = document.getElementById('settingsPanel');
+  var rst = document.getElementById('resetBtn');
+  var cnf = document.getElementById('resetConfirm');
+  var yes = document.getElementById('resetYes');
+  var no  = document.getElementById('resetNo');
 
-  toggle.addEventListener('click', () => {
-    const hidden = panel.hasAttribute('hidden');
-    hidden ? panel.removeAttribute('hidden') : panel.setAttribute('hidden', '');
-    confirm.setAttribute('hidden', '');
+  tog.addEventListener('click', function(){ pan.hidden = !pan.hidden; });
+  rst.addEventListener('click', function(){ cnf.hidden = false; });
+  no.addEventListener('click',  function(){ cnf.hidden = true;  });
+  yes.addEventListener('click', function() {
+    localStorage.removeItem(SAVE_KEY);
+    playerHP  = 100; playerXP = 0; streakVal = 0;
+    pan.hidden = cnf.hidden = true;
+    document.getElementById('deathScreen').hidden = true;
+    document.getElementById('levelWinScreen').hidden = true;
+    initLevel(0);
+    updateHUD();
   });
-
-  resetBtn.addEventListener('click', () => confirm.removeAttribute('hidden'));
-  yes.addEventListener('click', () => {
-    panel.setAttribute('hidden', ''); confirm.setAttribute('hidden', '');
-    resetGame();
-  });
-  no.addEventListener('click', () => confirm.setAttribute('hidden', ''));
-  contBtn.addEventListener('click', handleDeath);
 }
 
-// ═══════════════════════════════════════════════════════════
-// 8. BOOT
-// ═══════════════════════════════════════════════════════════
+/* =====================================================================
+   BOOT
+   ===================================================================== */
+function boot() {
+  levels = makeLevels();
+  var saved = loadGame();
+  initLevel(currentFloor, saved || {});
+  initTouch();
+  initSettings();
+  updateHUD();
+  requestAnimationFrame(gameLoop);
+}
 
-loadGame();
-initSettings();
-showIdle();
-syncUI();
-setNotify('⚔ 罪孽地下城 · 七年级语文 · 踏上征途');
+window.addEventListener('load', boot);
