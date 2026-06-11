@@ -1357,6 +1357,24 @@ function initSettings() {
 }
 
 /* =====================================================================
+   KEYBOARD
+   ===================================================================== */
+document.addEventListener('keydown', function(e) {
+  keys[e.code] = true;
+  if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
+    e.preventDefault();
+    jumpPressed = true;
+  }
+  if (e.code === 'ArrowLeft' || e.code === 'ArrowRight' ||
+      e.code === 'ArrowUp'   || e.code === 'ArrowDown') {
+    e.preventDefault();
+  }
+});
+document.addEventListener('keyup', function(e) {
+  keys[e.code] = false;
+});
+
+/* =====================================================================
    BOOT
    ===================================================================== */
 function boot() {
