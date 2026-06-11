@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>罪孽地下城 · 语文七下</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="root">
+
+  <!-- HUD -->
+  <div id="hud">
+    <div class="bar-wrap">
+      <div class="hud-lbl">HP <span id="hpNum">100</span></div>
+      <div class="bar-bg"><div id="hpFill"></div></div>
+    </div>
+    <div class="bar-wrap">
+      <div class="hud-lbl">XP <span id="xpNum">0</span></div>
+      <div class="bar-bg"><div id="xpFill"></div></div>
+    </div>
+    <div class="hud-stat">层 <span id="flNum">1</span>/6</div>
+    <div class="hud-streak">连击 <span id="streakNum">0</span>×</div>
+  </div>
+
+  <!-- Main layout -->
+  <div id="main">
+
+    <!-- Floor map -->
+    <nav id="sideMap" aria-label="楼层地图">
+      <h3>⚔ 地下城<br>地图 ⚔</h3>
+      <div id="fnList"></div>
+    </nav>
+
+    <!-- Game area -->
+    <div id="gameArea">
+      <div id="bossMsg" aria-live="polite">⚠ BOSS 已解锁！进入领主之间！</div>
+      <div id="roomGrid" role="list"></div>
+
+      <div id="panel">
+        <div id="notify" aria-live="polite"></div>
+        <div id="dynArea">
+          <!-- Idle screen injected by JS -->
+        </div>
+      </div>
+
+      <!-- Settings -->
+      <div id="settingsArea">
+        <button id="settingsToggle" aria-label="设置">⚙ 设置</button>
+        <div id="settingsPanel" hidden>
+          <button id="resetBtn">重置进度</button>
+          <div id="resetConfirm" hidden>
+            <span>确定重置?</span>
+            <button id="resetYes">确定</button>
+            <button id="resetNo">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Shared canvas (moved into dynArea during battles) -->
+<canvas id="cv" aria-hidden="true"></canvas>
+
+<!-- Screen flash overlay -->
+<div id="flashOverlay" aria-hidden="true"></div>
+
+<!-- Death screen -->
+<div id="deathScreen" role="dialog" aria-modal="true" aria-label="游戏结束" hidden>
+  <h2>冒险者<br>倒下了</h2>
+  <p id="deathMsg"></p>
+  <button id="continueBtn">从上一层继续</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1/dist/confetti.browser.min.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
