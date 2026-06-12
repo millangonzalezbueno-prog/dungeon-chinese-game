@@ -27,6 +27,14 @@ const DB = [
        note:'这是鲁迅《自嘲》中的名句，体现了他的精神品格'},
       {q:'邓稼先在哪个地方秘密研制原子弹?', opts:['北京','上海','西北荒漠','云南'], ans:2,
        note:'邓稼先在人迹罕至的西北荒漠秘密工作了28年'},
+      {q:'闻一多既是伟大的诗人，也是英勇的民主战士。', opts:['正确','错误'], ans:0, tag:'判断',
+       note:'闻一多集诗人、学者、民主战士于一身'},
+      {q:'《回忆鲁迅先生》的作者是冰心。', opts:['正确','错误'], ans:1, tag:'判断',
+       note:'其实作者是萧红，不是冰心'},
+      {q:'"鞠躬尽瘁，____"——邓稼先一生的写照。', opts:['死而后已','废寝忘食','勇往直前','锲而不舍'], ans:0, tag:'默写',
+       note:'诸葛亮《后出师表》名句，正是邓稼先的写照'},
+      {q:'《邓稼先》中作者将邓稼先与哪位美国科学家作对比?', opts:['奥本海默','爱因斯坦','费米','牛顿'], ans:0,
+       note:'以奥本海默的锋芒毕露，反衬邓稼先的忠厚朴实'},
     ]
   },
   {
@@ -51,6 +59,14 @@ const DB = [
        note:'《木兰诗》中的名句，写战争的惨烈和归来的喜悦'},
       {q:'《黄河颂》属于哪种文学体裁?', opts:['小说','散文','诗歌','戏剧'], ans:2,
        note:'《黄河颂》是组诗《黄河大合唱》中的第二乐章，体裁为诗歌'},
+      {q:'《最后一课》的作者都德是法国作家。', opts:['正确','错误'], ans:0, tag:'判断',
+       note:'阿尔丰斯·都德，法国小说家'},
+      {q:'《木兰诗》是唐代创作的诗歌。', opts:['正确','错误'], ans:1, tag:'判断',
+       note:'《木兰诗》是北朝民歌，选自宋代《乐府诗集》'},
+      {q:'"____，木兰当户织"——《木兰诗》开篇。', opts:['唧唧复唧唧','关关雎鸠','床前明月光','岱宗夫如何'], ans:0, tag:'默写',
+       note:'唧唧复唧唧，木兰当户织'},
+      {q:'《土地的誓言》表达的主要情感是?', opts:['对故乡的思念与收复故土的决心','对战争的恐惧','对自然的赞美','对童年的追忆'], ans:0,
+       note:'端木蕻良抒发对沦陷故土的眷恋与抗争决心'},
     ]
   },
   {
@@ -75,6 +91,14 @@ const DB = [
        note:'欧阳修《卖油翁》，通过卖油翁熟能生巧说明"熟能生巧"的道理'},
       {q:'"我亦无他，唯手熟尔"说明什么道理?', opts:['天赋重要','熟能生巧','勤能补拙','知足常乐'], ans:1,
        note:'卖油翁的话揭示：没有天才，只有熟练——熟能生巧'},
+      {q:'《老王》的作者杨绛是钱锺书的夫人。', opts:['正确','错误'], ans:0, tag:'判断',
+       note:'杨绛是著名作家、翻译家，钱锺书夫人'},
+      {q:'《卖油翁》中陈尧咨最擅长的是书法。', opts:['正确','错误'], ans:1, tag:'判断',
+       note:'陈尧咨善射(射箭)，并非书法'},
+      {q:'《台阶》中"台阶"主要象征父亲对什么的追求?', opts:['地位与尊严','金钱财富','身体健康','子女学业'], ans:0,
+       note:'高台阶=高地位，体现父亲对尊严的追求'},
+      {q:'"驿路梨花处处开"中的"梨花"含义不包括以下哪项?', opts:['盛开的梨花','哈尼小姑娘','雷锋精神','作者的家乡'], ans:3,
+       note:'梨花一语三关：花、人、精神'},
     ]
   },
   {
@@ -99,6 +123,14 @@ const DB = [
        note:'张中行写此文，记叙了叶圣陶先生待人宽、律己严的品格'},
       {q:'叶圣陶先生在语文方面最主要的主张是什么?', opts:['多写少读','简洁明确','文字规范','多用典故'], ans:2,
        note:'叶圣陶主张语文要规范，反对生造词语，强调用词准确'},
+      {q:'《陋室铭》与《爱莲说》都运用了托物言志的手法。', opts:['正确','错误'], ans:0, tag:'判断',
+       note:'前者借陋室言志，后者借莲花喻德'},
+      {q:'《爱莲说》中作者把牡丹比作君子。', opts:['正确','错误'], ans:1, tag:'判断',
+       note:'莲才是君子，牡丹喻富贵者，菊为隐逸者'},
+      {q:'"出淤泥而不染，____"——《爱莲说》。', opts:['濯清涟而不妖','香远益清','亭亭净植','可远观而不可亵玩焉'], ans:0, tag:'默写',
+       note:'出淤泥而不染，濯清涟而不妖'},
+      {q:'《河中石兽》中最终谁的判断被证明是正确的?', opts:['老河兵','讲学家','寺僧','过路人'], ans:0,
+       note:'老河兵凭实践经验，断定石兽在上游'},
     ]
   },
   {
@@ -123,6 +155,14 @@ const DB = [
        note:'两条路是比喻，象征人生中不同的选择与方向'},
       {q:'《紫藤萝瀑布》中作者的心情变化是?', opts:['高兴到悲伤','悲痛到宁静喜悦','平静到激动','无聊到充实'], ans:1,
        note:'作者由弟弟患病的悲痛，在花的感召下转为宁静和喜悦'},
+      {q:'《紫藤萝瀑布》运用了借景抒情、托物言志的手法。', opts:['正确','错误'], ans:0, tag:'判断',
+       note:'借紫藤萝盛开，抒发对生命的感悟'},
+      {q:'《假如生活欺骗了你》的作者是美国诗人。', opts:['正确','错误'], ans:1, tag:'判断',
+       note:'普希金是俄国诗人，不是美国'},
+      {q:'"而那过去了的，就会成为____。"——普希金。', opts:['亲切的怀恋','美好的回忆','遥远的梦','心中的痛'], ans:0, tag:'默写',
+       note:'原句：而那过去了的，就会成为亲切的怀恋'},
+      {q:'《一棵小桃树》中"没出息"的小桃树实际象征?', opts:['作者曾经弱小的自己','贫瘠的土壤','故乡的春天','奶奶的关爱'], ans:0,
+       note:'托物言志，小桃树即作者自己顽强的奋斗'},
     ]
   },
   {
@@ -147,23 +187,37 @@ const DB = [
        note:'"悲剧"指斯科特等人最终全部遇难；"伟大"指他们的诚信和献身精神'},
       {q:'刘慈欣是哪部科幻小说的作者?', opts:['《三体》','《流浪地球》','两部都是','《星际迷航》'], ans:2,
        note:'刘慈欣既是《三体》又是《流浪地球》的作者，中国最著名的科幻作家'},
+      {q:'《伟大的悲剧》的作者茨威格是奥地利作家。', opts:['正确','错误'], ans:0, tag:'判断',
+       note:'斯蒂芬·茨威格，奥地利著名传记作家'},
+      {q:'《带上她的眼睛》中"她"最后被困在月球上。', opts:['正确','错误'], ans:1, tag:'判断',
+       note:'她被困在地心(地球内部)，并非月球'},
+      {q:'《太空一日》中杨利伟乘坐的飞船是?', opts:['神舟五号','神舟七号','天宫一号','嫦娥一号'], ans:0,
+       note:'2003年神舟五号，中国首次载人航天飞行'},
+      {q:'《伟大的悲剧》中斯科特为对手作证，主要体现了?', opts:['诚信与高尚的风度','胆怯懦弱','争强好胜','迫不得已'], ans:0,
+       note:'为胜利者阿蒙森作证，展现绅士风度与诚信'},
     ]
   }
 ];
 
-/* Fill-in-blank scroll pickups (2 per floor) */
+/* Fill-in-blank scroll pickups — 名句默写 / 文学常识 (3 per floor) */
 const FILLS = [
-  [{q:'邓稼先是中国的"两弹____人"', ans:'元勋', hint:'元=第一，勋=功勋'},
-   {q:'斯是陋室，惟吾德____', ans:'馨', hint:'香气，比喻品德高尚'}],
-  [{q:'黄河颂中，黄河被称为中华民族的____河', ans:'母亲', hint:'哺育了无数子孙'},
-   {q:'木兰替____从军', ans:'父亲', hint:'阿爷无大儿，木兰无长兄'}],
+  [{q:'邓稼先是中国的"两弹____勋"', ans:'元', hint:'两弹元勋，元=第一'},
+   {q:'横眉冷对千夫指，俯首甘为____牛', ans:'孺子', hint:'鲁迅《自嘲》名句'},
+   {q:'《说和做》记述的是诗人闻____多', ans:'一', hint:'闻一多，集诗人、学者、斗士于一身'}],
+  [{q:'黄河被称为中华民族的____河', ans:'母亲', hint:'哺育了无数华夏子孙'},
+   {q:'将军百战死，壮士____年归', ans:'十', hint:'《木兰诗》，极写征战之久'},
+   {q:'《最后一课》中韩麦尔先生教的是____语', ans:'法', hint:'被割让的阿尔萨斯'}],
   [{q:'老王临死前送来香油和____', ans:'鸡蛋', hint:'象征他最后的善意'},
-   {q:'台阶越高，代表家庭地位越____', ans:'高', hint:'台阶与地位成正比'}],
-  [{q:'出淤泥而不____', ans:'染', hint:'这是莲花最著名的品质'},
-   {q:'河中石兽最终在上游被____到', ans:'找', hint:'因水流冲击逆流而上'}],
-  [{q:'《紫藤萝瀑布》中：生命的____是无止境的', ans:'长河', hint:'用长河比喻生命'},
+   {q:'《驿路梨花》借梨花歌颂____精神', ans:'雷锋', hint:'助人为乐，代代相传'},
+   {q:'卖油翁：我亦无他，唯手____尔', ans:'熟', hint:'熟能生巧的道理'}],
+  [{q:'斯是陋室，惟吾德____', ans:'馨', hint:'香气，比喻品德高尚'},
+   {q:'出淤泥而不____，濯清涟而不妖', ans:'染', hint:'《爱莲说》咏莲名句'},
+   {q:'《河中石兽》告诉我们不能只知其一、不知其____', ans:'二', hint:'要结合实际，全面思考'}],
+  [{q:'《紫藤萝瀑布》：生命的____是无止境的', ans:'长河', hint:'用长河比喻生命'},
+   {q:'假如生活欺骗了你，不要____，不要心急', ans:'悲伤', hint:'普希金劝人乐观'},
    {q:'弗罗斯特写了《未选择的____》', ans:'路', hint:'两条路象征人生选择'}],
   [{q:'杨利伟是中国第____位进入太空的宇航员', ans:'一', hint:'神舟五号，2003年'},
+   {q:'比斯科特更早到达南极的是挪威人____森', ans:'阿蒙', hint:'早了35天'},
    {q:'刘慈欣的科幻代表作《____》获雨果奖', ans:'三体', hint:'中国科幻最高成就'}],
 ];
 
@@ -173,107 +227,123 @@ const FILLS = [
 function makeLevels() {
   const GH = 388;
   return [
-    { // Floor 1
-      width:2400, groundY:GH,
-      platforms:[
-        [200,320,120,16],[380,280,100,16],[520,240,130,16],
-        [700,300,110,16],[860,260,140,16],[1040,220,120,16],
-        [1200,300,100,16],[1350,260,130,16],[1500,220,110,16],
-        [1650,300,120,16],[1800,260,100,16],[1950,320,140,16],
-        [2100,280,110,16],[2200,240,100,16],
-      ],
-      enemies:[
-        {x:500,y:GH-32,id:0},{x:900,y:GH-32,id:1},{x:1300,y:GH-32,id:2},
-        {x:1700,y:GH-32,id:3},{x:2000,y:GH-32,id:4},
-      ],
-      boss:{x:2280,y:GH-48},
-      scrolls:[{x:650,y:GH-40,fi:0},{x:1550,y:GH-40,fi:1}],
-      exit:{x:2350,y:GH-40},
-    },
-    { // Floor 2
-      width:2600, groundY:GH,
-      platforms:[
-        [150,300,140,16],[340,260,110,16],[500,220,120,16],
-        [670,280,100,16],[820,240,130,16],[980,200,110,16],
-        [1140,260,120,16],[1300,300,100,16],[1460,260,130,16],
-        [1620,220,120,16],[1790,280,100,16],[1940,240,110,16],
-        [2100,300,120,16],[2260,260,100,16],[2420,220,130,16],
-      ],
-      enemies:[
-        {x:450,y:GH-32,id:0},{x:850,y:GH-32,id:1},{x:1250,y:GH-32,id:2},
-        {x:1650,y:GH-32,id:3},{x:2050,y:GH-32,id:4},
-      ],
-      boss:{x:2500,y:GH-48},
-      scrolls:[{x:700,y:GH-40,fi:0},{x:1700,y:GH-40,fi:1}],
-      exit:{x:2570,y:GH-40},
-    },
-    { // Floor 3
-      width:2500, groundY:GH,
-      platforms:[
-        [180,340,100,16],[330,300,110,16],[480,260,120,16],[640,220,100,16],
-        [780,280,130,16],[940,240,110,16],[1100,200,120,16],
-        [1260,260,100,16],[1420,300,110,16],[1580,260,130,16],
-        [1740,220,100,16],[1890,280,110,16],[2040,240,120,16],
-        [2200,300,100,16],[2350,260,110,16],
-      ],
-      enemies:[
-        {x:400,y:GH-32,id:0},{x:800,y:GH-32,id:1},{x:1200,y:GH-32,id:2},
-        {x:1600,y:GH-32,id:3},{x:2000,y:GH-32,id:4},
-      ],
-      boss:{x:2430,y:GH-48},
-      scrolls:[{x:550,y:GH-40,fi:0},{x:1450,y:GH-40,fi:1}],
-      exit:{x:2480,y:GH-40},
-    },
-    { // Floor 4
+    { // Floor 1 — 杰出人物
       width:2700, groundY:GH,
       platforms:[
-        [200,320,130,16],[380,280,110,16],[560,240,120,16],
-        [730,300,100,16],[890,260,130,16],[1060,220,110,16],
-        [1230,280,120,16],[1400,240,100,16],[1570,200,130,16],
-        [1750,260,110,16],[1920,300,120,16],[2080,260,100,16],
-        [2250,220,130,16],[2430,280,110,16],[2590,240,100,16],
+        [220,330,90,16],[360,288,80,16],[500,246,90,16],   // ascending stair
+        [660,300,90,16],[820,250,80,16],[980,300,90,16],
+        [1140,256,90,16],[1300,214,80,16],[1460,272,90,16], // high climb
+        [1620,300,80,16],[1780,250,90,16],[1940,300,80,16],
+        [2100,256,90,16],[2260,300,80,16],[2420,256,90,16],
       ],
       enemies:[
-        {x:480,y:GH-32,id:0},{x:900,y:GH-32,id:1},{x:1350,y:GH-32,id:2},
-        {x:1780,y:GH-32,id:3},{x:2200,y:GH-32,id:4},
+        {x:470,id:0},{x:740,id:1},{x:1060,id:6},
+        {x:1320,y:214,pd:26,sp:0.7,id:2},                   // guards the high scroll
+        {x:1560,id:3},{x:1900,id:0},{x:2180,id:6},
       ],
-      boss:{x:2650,y:GH-48},
-      scrolls:[{x:630,y:GH-40,fi:0},{x:1650,y:GH-40,fi:1}],
-      exit:{x:2680,y:GH-40},
+      boss:{x:2560,y:GH-48},
+      scrolls:[{x:520,y:228,fi:0},{x:1300,y:196,fi:1},{x:2020,y:GH-40,fi:2}],
+      exit:{x:2640,y:GH-40},
     },
-    { // Floor 5
+    { // Floor 2 — 家国情怀
       width:2800, groundY:GH,
       platforms:[
-        [160,330,120,16],[340,290,100,16],[500,250,130,16],[670,210,110,16],
-        [840,270,120,16],[1010,230,100,16],[1170,190,130,16],
-        [1340,250,110,16],[1510,290,120,16],[1680,250,100,16],
-        [1850,210,130,16],[2020,270,110,16],[2190,230,120,16],
-        [2360,290,100,16],[2530,250,110,16],[2700,210,120,16],
+        [180,300,100,16],[340,256,80,16],[500,212,90,16],
+        [660,270,80,16],[820,226,80,16],[980,290,90,16],
+        [1140,246,80,16],[1300,202,90,16],[1460,260,80,16],
+        [1620,300,90,16],[1780,250,80,16],[1940,206,90,16],
+        [2100,266,80,16],[2260,300,90,16],[2420,250,80,16],[2560,290,90,16],
       ],
       enemies:[
-        {x:520,y:GH-32,id:0},{x:980,y:GH-32,id:1},{x:1420,y:GH-32,id:2},
-        {x:1860,y:GH-32,id:3},{x:2300,y:GH-32,id:4},
+        {x:440,id:1},{x:720,id:0},
+        {x:520,y:212,pd:30,sp:0.7,id:6},                    // on the high ledge
+        {x:1000,id:2},{x:1340,y:202,pd:30,sp:0.8,id:3},
+        {x:1660,id:1},{x:2020,id:6},{x:2300,id:0},
       ],
-      boss:{x:2760,y:GH-48},
-      scrolls:[{x:700,y:GH-40,fi:0},{x:1760,y:GH-40,fi:1}],
-      exit:{x:2780,y:GH-40},
+      boss:{x:2700,y:GH-48},
+      scrolls:[{x:660,y:252,fi:0},{x:1940,y:188,fi:1},{x:2380,y:GH-40,fi:2}],
+      exit:{x:2760,y:GH-40},
     },
-    { // Floor 6
+    { // Floor 3 — 凡人歌
+      width:2800, groundY:GH,
+      platforms:[
+        [200,330,90,16],[340,288,80,16],[480,246,80,16],[620,204,90,16], // tall climb
+        [780,270,80,16],[940,226,80,16],[1100,290,90,16],
+        [1260,246,80,16],[1420,300,80,16],[1580,256,90,16],
+        [1740,212,80,16],[1900,270,80,16],[2060,226,90,16],
+        [2220,290,80,16],[2380,246,80,16],[2540,300,90,16],
+      ],
+      enemies:[
+        {x:420,id:2},{x:700,id:3},
+        {x:640,y:204,pd:30,sp:0.7,id:7},
+        {x:1020,id:1},{x:1360,id:6},
+        {x:1760,y:212,pd:26,sp:0.8,id:7},
+        {x:1980,id:2},{x:2320,id:3},
+      ],
+      boss:{x:2700,y:GH-48},
+      scrolls:[{x:620,y:186,fi:0},{x:1740,y:194,fi:1},{x:2300,y:GH-40,fi:2}],
+      exit:{x:2760,y:GH-40},
+    },
+    { // Floor 4 — 修身养德
       width:3000, groundY:GH,
       platforms:[
-        [200,340,110,16],[380,300,120,16],[560,260,100,16],[730,220,130,16],
-        [910,280,110,16],[1090,240,120,16],[1270,200,100,16],
-        [1450,260,130,16],[1630,300,110,16],[1810,260,120,16],
-        [1990,220,100,16],[2170,280,130,16],[2360,240,110,16],
-        [2550,200,120,16],[2740,260,100,16],[2900,300,110,16],
+        [200,320,90,16],[360,276,80,16],[520,232,80,16],[680,200,90,16],
+        [850,260,80,16],[1010,216,80,16],[1170,280,90,16],
+        [1330,236,80,16],[1490,290,80,16],[1650,246,90,16],
+        [1810,202,80,16],[1970,266,80,16],[2130,222,90,16],
+        [2290,286,80,16],[2450,242,80,16],[2610,300,90,16],[2770,256,80,16],
       ],
       enemies:[
-        {x:560,y:GH-32,id:0},{x:1050,y:GH-32,id:1},{x:1550,y:GH-32,id:2},
-        {x:2050,y:GH-32,id:3},{x:2540,y:GH-32,id:4},
+        {x:470,id:3},{x:760,id:4},
+        {x:700,y:200,pd:30,sp:0.7,id:3},
+        {x:1060,id:6},{x:1380,id:1},
+        {x:1830,y:202,pd:26,sp:0.8,id:4},
+        {x:2080,id:3},{x:2380,id:6},{x:2640,id:4},
       ],
-      boss:{x:2950,y:GH-48},
-      scrolls:[{x:800,y:GH-40,fi:0},{x:1900,y:GH-40,fi:1}],
-      exit:{x:2980,y:GH-40},
+      boss:{x:2880,y:GH-48},
+      scrolls:[{x:680,y:182,fi:0},{x:1810,y:184,fi:1},{x:2520,y:GH-40,fi:2}],
+      exit:{x:2940,y:GH-40},
+    },
+    { // Floor 5 — 自然人生
+      width:3000, groundY:GH,
+      platforms:[
+        [180,330,80,16],[330,288,80,16],[480,246,80,16],[630,204,80,16],[780,168,90,16], // 5-step tower
+        [950,250,80,16],[1110,206,80,16],[1270,270,90,16],
+        [1430,226,80,16],[1590,290,80,16],[1750,246,90,16],
+        [1910,202,80,16],[2070,266,80,16],[2230,222,90,16],
+        [2390,286,80,16],[2550,242,80,16],[2710,300,90,16],
+      ],
+      enemies:[
+        {x:430,id:4},{x:710,id:7},
+        {x:800,y:168,pd:30,sp:0.6,id:7},                    // atop the tower
+        {x:1000,id:5},{x:1330,id:4},
+        {x:1930,y:202,pd:26,sp:0.8,id:5},
+        {x:2150,id:7},{x:2470,id:4},
+      ],
+      boss:{x:2880,y:GH-48},
+      scrolls:[{x:780,y:150,fi:0},{x:1910,y:184,fi:1},{x:2630,y:GH-40,fi:2}],
+      exit:{x:2940,y:GH-40},
+    },
+    { // Floor 6 — 探索科学
+      width:3300, groundY:GH,
+      platforms:[
+        [200,330,80,16],[350,288,80,16],[500,246,80,16],[650,204,80,16],
+        [800,260,80,16],[960,216,80,16],[1120,172,90,16],   // peak
+        [1290,232,80,16],[1450,288,80,16],[1610,244,90,16],
+        [1770,200,80,16],[1930,260,80,16],[2090,216,90,16],
+        [2250,280,80,16],[2410,236,80,16],[2570,290,90,16],
+        [2730,246,80,16],[2890,300,90,16],[3050,256,80,16],
+      ],
+      enemies:[
+        {x:460,id:5},{x:740,id:8},
+        {x:1140,y:172,pd:30,sp:0.6,id:8},
+        {x:1020,id:5},{x:1360,id:7},
+        {x:1790,y:200,pd:26,sp:0.9,id:8},
+        {x:2040,id:5},{x:2380,id:7},{x:2700,id:8},
+      ],
+      boss:{x:3160,y:GH-48},
+      scrolls:[{x:1120,y:154,fi:0},{x:1770,y:182,fi:1},{x:2850,y:GH-40,fi:2}],
+      exit:{x:3220,y:GH-40},
     },
   ];
 }
@@ -301,8 +371,9 @@ const W = 800;
 cv.width  = W;
 cv.height = EXPLORE_H;
 
-const GRAVITY    = 0.45;
-const JUMP_FORCE = -9.5;
+const GRAVITY    = 0.30;   // lower gravity = slower, floatier jump
+const JUMP_FORCE = -8.2;   // tuned so jump height stays generous
+const APEX_FLOAT = 0.55;   // extra hang-time near the top of the arc
 const SPEED      = 3.5;
 const COYOTE_MAX = 8;
 
@@ -346,6 +417,9 @@ let battleRound   = 0;
 let battleCorrect = 0;
 let battlePhase   = 'question';
 let timerInterval = null;
+let lungeTimer    = 0;   // drives the player's attack-lunge animation in battle
+let lungeMax      = 28;
+let enemyShake    = 0;   // enemy recoil shake on a hit
 
 let fillData   = null;
 let fillResult = null;
@@ -354,7 +428,7 @@ let frameCount = 0;
 let raf;
 
 const keys = {};
-let touchLeft = false, touchRight = false, jumpPressed = false;
+let touchLeft = false, touchRight = false, jumpPressed = false, touchJumpHeld = false;
 
 /* =====================================================================
    SAVE / LOAD
@@ -397,12 +471,13 @@ function initLevel(floorIdx, savedData) {
   const fl = floorIdx + 1;
 
   enemies = lv.enemies.map((e, i) => ({
-    x: e.x, y: lv.groundY - 4,
+    x: e.x,
+    y: e.y != null ? e.y : lv.groundY - 4,   // elevated enemies patrol on platforms
     w: 28, h: 36,
     startX: e.x,
-    patrolDist: 90,
+    patrolDist: e.pd != null ? e.pd : 90,
     dir: 1,
-    speed: 0.8 + floorIdx * 0.12,
+    speed: (0.8 + floorIdx * 0.12) * (e.sp != null ? e.sp : 1),
     id: e.id,
     floor: fl,
     defeated: savedData && savedData.defeatedEnemies ? !!savedData.defeatedEnemies[i] : false,
@@ -427,6 +502,14 @@ function initLevel(floorIdx, savedData) {
   document.getElementById('battleUI').hidden = true;
   document.getElementById('levelWinScreen').hidden = true;
   document.getElementById('deathScreen').hidden = true;
+
+  // Retune the soundtrack tempo to the new floor
+  if (music.playing) {
+    music.stepMs = 300 - currentFloor * 12;
+    clearInterval(music.timer);
+    music.timer = setInterval(musicTick, music.stepMs);
+  }
+
   updateHUD();
 }
 
@@ -478,6 +561,7 @@ function playSound(type) {
   switch(type) {
     case 'jump':    beep(320,0.08,'square',0.10); break;
     case 'sword':   beep(440,0.05,'sawtooth',0.12); beep(660,0.08,'sawtooth',0.08,100); break;
+    case 'hit':     beep(150,0.10,'square',0.16,-200); beep(90,0.14,'sawtooth',0.12,-300); break;
     case 'wrong':   beep(160,0.2,'sawtooth',0.14); beep(120,0.25,'sawtooth',0.10,-400); break;
     case 'correct': beep(660,0.08,'square',0.10); beep(880,0.12,'square',0.08); break;
     case 'victory': [523,659,784,1047].forEach(function(f,i){setTimeout(function(){beep(f,0.18,'square',0.12);},i*120);}); break;
@@ -488,6 +572,83 @@ function playSound(type) {
     case 'die':     [200,160,120,80].forEach(function(f,i){setTimeout(function(){beep(f,0.18,'sawtooth',0.16);},i*100);}); break;
     case 'exit':    beep(523,0.15,'square',0.10); beep(784,0.20,'square',0.08); break;
   }
+}
+
+/* =====================================================================
+   BACKGROUND MUSIC  (procedural gothic loop, Web Audio)
+   ===================================================================== */
+// Four-bar minor progression (i – VI – III – VII): Am – F – C – G.
+// Each bar = 8 eighth-note steps. Bass anchors the chord, a soft arpeggio
+// drifts above, with a faint bell on the downbeat.
+var MUSIC_BARS = [
+  { bass:110.00, arp:[220.00, 261.63, 329.63, 261.63] }, // A minor
+  { bass:87.31,  arp:[174.61, 220.00, 261.63, 220.00] }, // F major
+  { bass:130.81, arp:[261.63, 329.63, 392.00, 329.63] }, // C major
+  { bass:98.00,  arp:[196.00, 246.94, 293.66, 246.94] }, // G major
+];
+var music = { on:true, playing:false, gain:null, timer:null, step:0, stepMs:300 };
+
+function musicNote(freq, dur, type, vol) {
+  if (!music.gain) return;
+  try {
+    var ac = getAC();
+    var o  = ac.createOscillator();
+    var g  = ac.createGain();
+    o.type = type;
+    o.frequency.value = freq;
+    var t = ac.currentTime;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(vol, t + 0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g);
+    g.connect(music.gain);
+    o.start(t);
+    o.stop(t + dur + 0.05);
+  } catch(e) {}
+}
+
+function startMusic() {
+  if (music.playing || !music.on) return;
+  try {
+    var ac = getAC();
+    music.gain = ac.createGain();
+    music.gain.gain.value = 0.05;     // keep the bed quiet under SFX
+    music.gain.connect(ac.destination);
+  } catch(e) { return; }
+  music.playing = true;
+  music.step = 0;
+  // Tempo drifts a touch faster on deeper floors for rising tension
+  music.stepMs = 300 - currentFloor * 12;
+  clearInterval(music.timer);
+  music.timer = setInterval(musicTick, music.stepMs);
+}
+
+function musicTick() {
+  if (!music.playing) return;
+  var bar = MUSIC_BARS[Math.floor(music.step / 8) % MUSIC_BARS.length];
+  var s   = music.step % 8;
+  if (s === 0 || s === 4) musicNote(bar.bass, 0.55, 'triangle', 0.55);     // bassline
+  musicNote(bar.arp[s % bar.arp.length], 0.26, 'sine', 0.20);              // arpeggio
+  if (s === 0) musicNote(bar.arp[2] * 2, 0.5, 'sine', 0.10);               // bell accent
+  music.step = (music.step + 1) % (8 * MUSIC_BARS.length);
+}
+
+function stopMusic() {
+  music.playing = false;
+  if (music.timer) { clearInterval(music.timer); music.timer = null; }
+}
+
+function initMusicToggle() {
+  var btn = document.createElement('button');
+  btn.id = 'musicToggle';
+  btn.textContent = '♪';   // ♪
+  btn.title = '音乐开关';
+  btn.addEventListener('click', function() {
+    music.on = !music.on;
+    btn.style.opacity = music.on ? '1' : '0.35';
+    if (music.on) startMusic(); else stopMusic();
+  });
+  document.getElementById('hud').appendChild(btn);
 }
 
 /* =====================================================================
@@ -590,23 +751,35 @@ function drawPlayer(x, y, facing, state, frame, hurtTmr) {
   ctx.fillRect(-5, 8, 4, 8+legOff);
   ctx.fillRect(1,  8, 4, 8-legOff);
 
-  // Sword
-  ctx.fillStyle = '#d0d0d0';
-  ctx.fillRect(6,-8,3,14);
-  ctx.fillStyle = '#804000';
-  ctx.fillRect(4,-4,7,2);
+  // Sword — thrust forward when attacking, otherwise held upright
+  if (state === 'attack') {
+    ctx.fillStyle = '#804000';
+    ctx.fillRect(4, -2, 6, 2);            // grip
+    ctx.fillStyle = '#e8e8e8';
+    ctx.fillRect(9, -3, 16, 3);           // blade extended forward
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(22, -3, 3, 3);           // gleaming tip
+  } else {
+    ctx.fillStyle = '#d0d0d0';
+    ctx.fillRect(6,-8,3,14);
+    ctx.fillStyle = '#804000';
+    ctx.fillRect(4,-4,7,2);
+  }
 
   ctx.globalAlpha = 1;
   ctx.restore();
 }
 
 var ENEMY_C = [
-  {body:'#405080',head:'#304060',eye:'#ff4040'},
-  {body:'#303030',head:'#202020',eye:'#ff8000'},
-  {body:'#706050',head:'#504030',eye:'#ffff00'},
-  {body:'#302050',head:'#201040',eye:'#d060ff'},
-  {body:'#204020',head:'#102010',eye:'#40ff40'},
-  {body:'#202040',head:'#101030',eye:'#00c8ff'},
+  {body:'#405080',head:'#304060',eye:'#ff4040'}, // 0 骷髅战士  skull warrior
+  {body:'#303030',head:'#202020',eye:'#ff8000'}, // 1 黑骑士    dark knight
+  {body:'#706050',head:'#504030',eye:'#ffff00'}, // 2 石像鬼    stone idol
+  {body:'#302050',head:'#201040',eye:'#d060ff'}, // 3 僧影      robed monk
+  {body:'#204020',head:'#102010',eye:'#40ff40'}, // 4 藤蔓魔    vine horror
+  {body:'#202040',head:'#101030',eye:'#00c8ff'}, // 5 机械守卫  mech guardian
+  {body:'#5a1020',head:'#3a0810',eye:'#ff3050'}, // 6 血怨灵    crimson wraith
+  {body:'#103848',head:'#082530',eye:'#80f0ff'}, // 7 寒霜亡魂  frost revenant
+  {body:'#403010',head:'#281e08',eye:'#ffd040'}, // 8 黄沙游魂  sand phantom
 ];
 
 function drawEnemy(e, ox) {
@@ -794,7 +967,10 @@ function applyPhysics() {
   pl.x += pl.vx;
   pl.x  = Math.max(0, Math.min(lv.width - pl.w, pl.x));
 
-  pl.vy += GRAVITY;
+  // Apply gravity, with a lighter pull near the apex so the jump hangs
+  var g = GRAVITY;
+  if (!pl.onGround && Math.abs(pl.vy) < 1.4) g *= APEX_FLOAT;
+  pl.vy += g;
   pl.y  += pl.vy;
 
   pl.onGround = false;
@@ -918,9 +1094,12 @@ function showRoundQ() {
   document.getElementById('notify').innerHTML =
     '\u{2694} 第' + (battleRound+1) + '/3 题 &nbsp;·&nbsp; 连击 ' + streakVal + '\xd7';
 
+  var tagHTML = q.tag ? '<span class="q-tag">' + q.tag + '</span>' : '';
+  var tfClass = (q.opts.length === 2) ? ' tf' : '';
+
   document.getElementById('dynArea').innerHTML =
-    '<div class="battle-q">' + q.q + '</div>' +
-    '<div class="battle-opts" id="optGrid">' +
+    '<div class="battle-q">' + tagHTML + q.q + '</div>' +
+    '<div class="battle-opts' + tfClass + '" id="optGrid">' +
       q.opts.map(function(opt,i) {
         return '<button class="opt-btn" data-idx="' + i + '">' + labels[i] + '. ' + opt + '</button>';
       }).join('') +
@@ -969,10 +1148,11 @@ function onAnswer(selectedIdx, qObj) {
     streakVal++;
     playerXP += 10 + Math.min(streakVal, 5)*2;
     playSound('correct');
-    spawnParticles(W/2, BATTLE_H/2, '#40ff80', 8);
     document.getElementById('notify').innerHTML =
       '<span style="color:#40ff80">✓ 正确！</span> ' + qObj.note;
     if (battleEnemy) battleEnemy.hp = Math.max(0, battleEnemy.hp-1);
+    // Launch the player into an attack-lunge that strikes the enemy
+    lungeTimer = lungeMax;
   } else {
     streakVal = 0;
     playerHP  = Math.max(0, playerHP - 15);
@@ -1115,6 +1295,9 @@ function showBossIntro(name, title, cb) {
 /* =====================================================================
    BATTLE CANVAS
    ===================================================================== */
+var PLAYER_BX = 120;        // player's resting x in battle
+var ENEMY_BX  = W - 150;    // enemy's x in battle
+
 function renderBattleCanvas() {
   var p = PAL[currentFloor+1];
   ctx.fillStyle = p.wall;
@@ -1125,11 +1308,52 @@ function renderBattleCanvas() {
   ctx.fillStyle = 'rgba(255,255,255,0.07)';
   ctx.fillRect(0, BATTLE_H-20, W, 2);
 
-  drawPlayer(120, BATTLE_H-52, 1, 'idle', 0, pl.hurtTimer);
+  // --- Advance the attack-lunge animation -----------------------------
+  var lungeOffset = 0;
+  var attacking   = false;
+  if (lungeTimer > 0) {
+    var prev = lungeTimer;
+    lungeTimer--;
+    var prog = (lungeMax - lungeTimer) / lungeMax;        // 0 → 1
+    // Dash out toward the enemy, then snap back (sin gives a there-and-back arc)
+    var dashDist = (ENEMY_BX - PLAYER_BX) - 90;
+    lungeOffset  = Math.sin(prog * Math.PI) * dashDist;
+    attacking    = prog < 0.62;
+    // The strike lands as the lunge crosses its peak
+    var peak = lungeMax / 2;
+    if (prev > peak && lungeTimer <= peak) {
+      playSound('sword');
+      playSound('hit');
+      enemyShake = 10;
+      if (battleEnemy) battleEnemy.hurtTimer = 18;
+      var ex = ENEMY_BX, ey = BATTLE_H - 36;
+      spawnParticles(ex, ey, '#fff0a0', 10);
+      spawnParticles(ex, ey, '#ff6020', 8);
+      if (battleEnemy && battleEnemy.hp <= 0) spawnParticles(ex, ey, p.torch, 14);
+    }
+  }
+  if (enemyShake > 0) enemyShake--;
 
+  // --- Player ----------------------------------------------------------
+  drawPlayer(PLAYER_BX + lungeOffset, BATTLE_H-52, 1,
+             attacking ? 'attack' : 'idle', 0, pl.hurtTimer);
+
+  // Slash arc in front of the player at the peak of the lunge
+  if (attacking && lungeOffset > 30) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(PLAYER_BX + lungeOffset + 24, BATTLE_H-40, 22, -1.1, 1.1);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // --- Enemy / Boss ----------------------------------------------------
+  var shakeX = enemyShake > 0 ? (Math.random()-0.5) * enemyShake : 0;
   if (battleEnemy && !battleEnemy.defeated) {
     ctx.save();
-    ctx.translate(W - 200, 0);
+    ctx.translate(ENEMY_BX - 160 + shakeX, 0);
     drawEnemy({x:160, y:BATTLE_H-4, w:28, h:36, id:battleEnemy.id,
                hp:battleEnemy.hp, hurtTimer:battleEnemy.hurtTimer, defeated:false}, 0);
     ctx.restore();
@@ -1140,7 +1364,7 @@ function renderBattleCanvas() {
     ctx.shadowBlur  = 16;
     ctx.font = '40px serif';
     ctx.textAlign = 'center';
-    ctx.fillText('\u{1F479}', W-130, BATTLE_H-28);
+    ctx.fillText('\u{1F479}', ENEMY_BX + 10 + shakeX, BATTLE_H-28);
     ctx.shadowBlur = 0;
     ctx.restore();
   }
@@ -1269,9 +1493,15 @@ function handleInput() {
   if (jumpPressed && pl.coyoteTime > 0) {
     pl.vy = JUMP_FORCE;
     pl.coyoteTime = 0;
+    pl.jumping = true;
     playSound('jump');
   }
   jumpPressed = false;
+
+  // Variable jump height: releasing the jump key cuts the ascent short
+  var jumpHeld = keys['Space'] || keys['ArrowUp'] || keys['KeyW'] || touchJumpHeld;
+  if (pl.jumping && !jumpHeld && pl.vy < -3) pl.vy = -3;
+  if (pl.vy >= 0 || pl.onGround) pl.jumping = false;
 
   if (!pl.onGround)               pl.state = 'jump';
   else if (Math.abs(pl.vx) > 0.3) pl.state = 'run';
@@ -1340,8 +1570,9 @@ function initTouch() {
 
   held(btnL, function(){touchLeft=true;},  function(){touchLeft=false;});
   held(btnR, function(){keys['ArrowRight']=true;}, function(){keys['ArrowRight']=false;});
-  btnJ.addEventListener('touchstart', function(e){e.preventDefault();jumpPressed=true;},{passive:false});
-  btnJ.addEventListener('mousedown',  function(){jumpPressed=true;});
+  held(btnJ,
+    function(){ jumpPressed=true; touchJumpHeld=true; },
+    function(){ touchJumpHeld=false; });
 }
 
 /* =====================================================================
@@ -1384,6 +1615,7 @@ function showTitleScreen() {
 
   document.getElementById('titleStartBtn').onclick = function() {
     hideTitleScreen();
+    startMusic();
     var saved = loadGame();
     initLevel(currentFloor, saved || {});
     updateHUD();
@@ -1510,6 +1742,7 @@ function showLevelSelect() {
       return function() {
         document.getElementById('levelSelectScreen').hidden = true;
         document.getElementById('hud').style.visibility = 'visible';
+        startMusic();
         playerHP   = 100;
         currentFloor = idx;
         // Keep XP but reset floor-specific progress
@@ -1556,6 +1789,7 @@ function boot() {
   loadGame();
   initTouch();
   initSettings();
+  initMusicToggle();
   showTitleScreen();
 }
 

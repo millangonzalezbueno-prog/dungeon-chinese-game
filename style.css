@@ -207,6 +207,40 @@ body::before {
   margin-bottom: 8px;
 }
 
+/* True/false questions: two wide buttons */
+.battle-opts.tf {
+  grid-template-columns: 1fr 1fr;
+  max-width: 460px;
+}
+
+/* Question-format chip (判断 / 默写 …) */
+.q-tag {
+  display: inline-block;
+  font-family: var(--font-px);
+  font-size: .40rem;
+  color: #0a0610;
+  background: var(--gold);
+  padding: 3px 6px;
+  margin-right: 8px;
+  vertical-align: middle;
+  letter-spacing: .06em;
+  border-radius: 2px;
+}
+
+/* Music toggle in the HUD */
+#musicToggle {
+  font-family: var(--font-px);
+  font-size: .5rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--gold);
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: all .12s;
+  line-height: 1;
+}
+#musicToggle:hover { border-color: var(--gold); box-shadow: 0 0 8px rgba(200,145,58,.3); }
+
 .opt-btn {
   font-family: var(--font-cn);
   font-size: .82rem;
